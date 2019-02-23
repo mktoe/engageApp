@@ -20,6 +20,29 @@ class PostsController < ApplicationController
         end
     end
 
+    # GET /profiles/1/edit
+    def edit
+        @post = Post.find_by(id: params[:id])
+    end
+
+    def update
+        @post = Post.find_by(id: params[:id])
+        @post.post_text = params[:post_text]
+        if @post.save
+            flash[:notice] = "投稿を編集しました"
+            redirect_to("/")
+        else
+            render("/")
+        end
+    end
+
+    def destroy
+        @post = Post.find_by(id: params[:id])
+        @post.destroy
+        flash[:notice] = "投稿を削除しました"
+        redirect_to("/")
+      end
+
     private
     def post_params
         params[:post].permit(:profile_id, :post_text, {post_image: []})

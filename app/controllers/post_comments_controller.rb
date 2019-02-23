@@ -21,6 +21,29 @@ class PostCommentsController < ApplicationController
         end
     end
 
+    # GET /profiles/1/edit
+    def edit
+        @post_comment = PostComment.find_by(id: params[:id])
+    end
+
+    def update
+        @post_comment = PostComment.find_by(id: params[:id])
+        @post_comment.comment_text = params[:comment_text]
+        if @post_comment.save
+            flash[:notice] = "投稿を編集しました"
+            redirect_to("/")
+        else
+            render("/")
+        end
+    end
+
+    def destroy
+        @post_comment = PostComment.find_by(id: params[:id])
+        @post_comment.destroy
+        flash[:notice] = "投稿を削除しました"
+        redirect_to("/")
+    end
+
     private
     def post_comment_params
         params[:post_comment].permit(:profile_id, :post_id, :comment_text, {comment_image: []})
