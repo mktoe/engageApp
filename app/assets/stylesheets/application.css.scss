@@ -1,0 +1,347 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "bootstrap";
+
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+ $green01: #0097A7;
+ $green02: #00BCD4;
+ $green03: #B2EBF2;
+
+ /*************************
+ リセット
+ *************************/
+ *{
+    font-size:14px;
+ }
+ ul{
+    margin:0;
+    padding:0;
+ }
+ ul li{
+     list-style: none;
+ }
+
+ header{
+    border-bottom: 1px solid #e4e4e4;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    align-self: stretch;
+    align-items: center;
+    margin: 0;
+    padding: 8px 20px 8px 20px;
+    position: relative;
+    z-index: 3;
+    background: #0097A7;
+    width: calc(100% - 150px);
+    margin-left:150px;
+
+    a{
+        color:#fff !important;
+        &:hover{
+            background: transparent;
+            color:$green03 !important;
+            text-decoration: none;
+        }
+    }
+}
+ul.header-list li{
+    float:left;
+    list-style: none;
+    margin: 0 8px;
+}
+ul.header-list li a{
+    display: block;
+    padding:5px 8px;
+}
+
+
+.area-left{
+    transition-duration: .2s;
+    transition-timing-function: ease-out;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 150px;
+    height: 100%;
+    max-height: 100%;
+    min-height: 430px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #151F25;
+    color: #fff;
+    overflow: visible;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 5;
+    padding:0px 10px 20px 10px;
+    a{
+        color:#fff !important;
+        &:hover{
+            background: transparent;
+            color:$green03 !important;
+            text-decoration: none;
+        }
+    }
+}
+
+.area-left02{
+    transition-duration: .2s;
+    transition-timing-function: ease-out;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 200px;
+    height: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 5;
+    border-right:1px solid #e4e4e4;
+    padding:20px;
+}
+
+
+.content{
+    margin-left: 150px;
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-grow: 1;
+    z-index: 1;
+    -webkit-overflow-scrolling: touch;
+    background:#F9F9F9;;
+    padding-bottom: 80px;
+    width: calc(100% - 150px);
+    height: calc(100% - 49px);
+    max-height: 100%;
+}
+
+.area-center{
+    transition-duration: .2s;
+    transition-timing-function: ease-out;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    /*width: calc(100% - 380px);*/
+    width:700px;
+    height: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 5;
+    margin-left:200px;
+
+    border-right:1px solid #e4e4e4;
+}
+/*スクロールバーを消す*/
+.area-center::-webkit-scrollbar{
+    display:none;
+}
+.area-center {
+    -ms-overflow-style:none;
+}
+
+.area-right{
+    transition-duration: .2s;
+    transition-timing-function: ease-out;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: calc(100% - 900px);
+    max-width:380px;
+    height: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left:900px;
+    overflow: visible;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 5;
+    border-left:1px solid #e4e4e4;
+}
+
+ul.left-area-nav{
+    margin-top:30px;
+}
+ul.left-area-nav li{
+}
+ul.left-area-nav li a{
+    font-size:13px;
+    display: block;
+    padding:12px 0;
+}
+ul.left-area-nav li a i{
+    color:#00BCD4;
+    font-size:16px;
+    margin-right:5px;
+}
+
+
+/* =================================
+投稿一覧ページ（トップ）
+===================================*/
+.post_block{
+    background:#fff;
+    padding:10px;
+    border-radius:5px;
+    margin:10px 0;
+    border:1px solid #dddfe2;
+    overflow: hidden;
+}
+.post_image_group{
+    margin:10px 0;
+}
+img.post_image{
+    width:670px;
+    height:auto;
+    object-fit: cover;
+    margin-left:-10px;
+}
+.post-avatar-area{
+    margin:0 0 10px 0;
+    clear:both;
+    overflow: auto;
+}
+.post-circle-avatar{
+    float:left;
+    margin-right: 10px;
+}
+.post-circle-avatar img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%; 
+}
+.post-avatar-right{
+    float:left;
+}
+span.post-a-name{
+    color:$green01;
+    display: block;
+}
+.post-a-date{
+    font-size:13px !important;
+    color:#616770;
+}
+.post-block-text{
+    clear:both;
+    margin:20px 0 20px 0;
+    color:#000;
+}
+.post-block-icon-area{
+    clear:both;
+    width:100%;
+    border-bottom:1px solid #dddfe2;
+    padding:0 0 10px 0;
+    margin-bottom: 10px;
+}
+.icon-area-comment-count{
+    float:right;
+    font-size:12px !important;
+    color:$green02;
+}
+.post-comment-area{
+    padding:5px 0;
+    border-bottom:1px solid #dddfe2;
+    margin-bottom:10px;
+    clear:both;
+}
+.post-comment-block{
+    width:100%;
+    display: block;
+    padding:0px 0 8px 0;
+}
+.post-comment-block:after{
+    content:"";
+    display: block;
+    width:100%;
+    clear: both;
+}
+.post-comment-left{
+    float:left;
+    margin-right:10px;
+    width:35px;
+}
+.post-comment-a-img img{
+    width: 35px;
+    height: 35px;
+    object-fit: cover;
+    border-radius: 50%; 
+    border:1px solid #dddfe2;
+}
+.post-comment-right{
+    float:left;
+    max-width: 580px;
+}
+.post-comment-a-name{
+    color:$green01;
+    font-size:13px;
+    display: block;
+}
+.post-comment-a-comment{
+    background: #f2f3f5;
+    padding:5px;
+    border-radius:5px;
+    font-size:13px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*プロフィール編集　画像*/
+.circle-avatar img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+  img.hidden{
+      display: none;
+  }
+  

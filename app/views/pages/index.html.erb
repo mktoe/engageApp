@@ -1,0 +1,124 @@
+<%= form_for @post , url:'/posts/create' do |f| %>
+    <%= f.hidden_field :profile_id , :value => current_user.id %>
+    <%= f.text_field :post_text , class: "hogehoge" , placeholder: "投稿の入力" %>
+    <br>
+    
+    <div class="view_box">
+    	<%= f.file_field :post_image, multiple: true, class: 'file' %>
+    </div>
+
+    <%= f.submit :"追加" , :class=>"btn btn-primary add_btn" %>
+<% end %>
+
+
+
+<div class="container">
+<% @posts.each do |post| %>
+  <div class="post_block">
+	
+	<div class="post-avatar-area">
+	
+		<%# model posts.rbにprofileメソッドを作成 %>
+		<div class="post-circle-avatar">
+			<%= link_to "/profiles/#{post.profile.id}" do %>
+				<%= image_tag post.profile.profile_image.thumb150.url %>
+			<% end %>
+		</div><!--/.post-circle-avatar-->
+
+		<div class="post-avatar-right">
+			<span class="post-a-name">
+					<%= link_to "/profiles/#{post.profile.id}" do %>
+						<%= post.profile.profile_name  %>
+					<% end %>
+			</span>
+
+			<span class="post-a-date">
+			<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+			</span>
+		</div><!--/.avatar-name-->
+	</div><!--/.post-avatar-area-->
+
+	<div class="post-block-text">
+    	<%= post.post_text %>
+	</div><!--post-block-text-->
+
+  <% if ! post.post_image.nil? %>
+		<div class="post_image_group">
+				<% post.post_image.each do |images| %>
+					<%= link_to images.url do %>
+						<%= image_tag images.url, :class => "post_image" %>
+					<% end %>
+				<% end %>
+		</div><!--/.post_image_group-->
+  <% end %>
+
+	<div class="post-block-icon-area">
+		<%# いいねボタン %>
+		<% if PostLike.find_by(profile_id: @p_user.id, post_id: post.id) %>
+		<%# いいねされている時 %>
+			<a href="javascript:void(0)" post_id="<%= post.id %>" class="like_btn">
+				<i btn="like" class="fas fa-heart like"></i>
+			</a>
+			<span class="like_count_num"><%= @likes_count.where(post_id: post.id).count %></span>
+		<% else %>
+		<%# いいねされていない時 %>
+			<a href="javascript:void(0)" post_id="<%= post.id %>" class="like_btn">
+				<i btn="unlike" class="far fa-heart unlike"></i>
+			</a>
+			<span class="like_count_num"><%= @likes_count.where(post_id: post.id).count %></span>
+		<% end %>
+
+		<%# コメント件数表示 %>
+		<div class="icon-area-comment-count">
+			コメント<%= @post_comments.where(post_id: post.id).count %>件
+		</div>
+	</div><!--/.post-block-icon-area-->
+
+	<%# コメント表示 %>
+	<% @comment = "" %>
+	<% @comment = @post_comments.where(post_id: post.id) %>
+	<% if ! @comment.blank? %>
+	<div class="post-comment-area">
+		<% @comment.each do |comment| %>
+		<div class="post-comment-block">
+			<div class="post-comment-left">
+				<span class="post-comment-a-img"><%= image_tag comment.profile.profile_image.thumb150.url %></span>
+			</div><!--/.post-comment-left-->
+			<div class="post-comment-right">
+				<span class="post-comment-a-name"><%= comment.profile.profile_name %></span>
+				<div class="post-comment-a-comment">
+					<%= comment.comment_text %>
+
+					<% if ! comment.comment_image.nil? %>
+							<% comment.comment_image.each do |images| %>
+								<%= link_to images.url do %>
+									<%= image_tag images.url, :class => "post_image" %>
+								<% end %>
+							<% end %>
+					<% end %>
+
+				</div><!--/.post-comment-a-comment-->
+			</div><!--/.post-comment-right-->
+		</div><!--/.post-comment-block-->
+		<% end %>
+	</div><!--post-comment-area-->
+	<% end %>
+
+	<%# コメント入力 %>
+	<%= form_for @post_comment , url:"/post_comments/create" do |form| %>
+    <%= form.hidden_field :profile_id , :value => current_user.id %>
+		<%= form.hidden_field :post_id , :value => post.id %>
+		<%= form.text_field :comment_text, placeholder: "コメントの入力" %>
+
+		<div class="view_box">
+    	<%= form.file_field :comment_image, multiple: true, class: 'file comment_file' %>
+    </div>
+
+    <%= form.submit :"追加" , :class=>"btn btn-primary add_btn" %>
+	<% end %>
+
+  </div><!--/.post_block-->
+<% end %>
+
+</div><!--/.container-->
+

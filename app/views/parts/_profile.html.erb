@@ -1,0 +1,21 @@
+<%#プロフィール表示エリア %>
+<div class="area-left02">
+    <%= image_tag @p_user.profile_image.thumb150.url %>
+    <%= @p_user.profile_name %>
+
+    <br>
+
+    入社<br>
+    <%= @p_user.profile_join_date.strftime("%Y年%m月") %>
+
+    <br>
+    
+    趣味<br>
+    <%= @p_user.profile_hobby %>
+
+    <br>
+    
+    プロフィール文<br>
+    <%= @p_user.profile_text %>
+
+</div><!--/.area-left02 -->

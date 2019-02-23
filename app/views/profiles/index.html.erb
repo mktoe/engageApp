@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Profiles</h1>
+
+<table>
+
+  <tbody>
+    <% @profiles.each do |profile| %>
+      <tr>
+        <%# 画像表示 サムネイル150px　%>
+        <td>
+          <%= link_to profile do %>
+            <%= image_tag profile.profile_image.thumb150.url %>
+          <% end %>  
+        </td>
+
+        <td><%= profile.profile_name %></td>
+        <td><%= link_to 'Show', profile %></td>
+        <td><%= link_to 'Edit', edit_profile_path(profile) %></td>
+        <td><%= link_to 'Destroy', profile, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Profile', new_profile_path %>

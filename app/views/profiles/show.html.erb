@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<%= image_tag @profile.profile_cover_image.url %>
+
+<%= image_tag @profile.profile_image.url %>
+
+<p>
+  <strong>Profile name:</strong>
+  <%= @profile.profile_name %>
+</p>
+
+<p>
+  <strong>Profile birth:</strong>
+  <%= @profile.profile_birth %>
+</p>
+
+<p>
+  <strong>Profile join date:</strong>
+  <%= @profile.profile_join_date %>
+</p>
+
+<p>
+  <strong>Profile hobby:</strong>
+  <%= @profile.profile_hobby %>
+</p>
+
+<p>
+  <strong>Profile text:</strong>
+  <%= @profile.profile_text %>
+</p>
+
+<%= link_to 'Edit', edit_profile_path(@profile) %> |
+<%= link_to 'Back', profiles_path %>
