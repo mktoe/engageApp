@@ -1,8 +1,8 @@
 class Post < ApplicationRecord
 
     #1対多のリレーション
-    has_many :post_likes, dependent: :destroy
-    has_many :post_comments, dependent: :destroy
+    has_many :post_like, dependent: :destroy
+    has_many :post_comment, dependent: :destroy
     
     #profile情報を取得するメソッド
     def profile

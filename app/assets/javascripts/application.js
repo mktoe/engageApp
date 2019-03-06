@@ -10,11 +10,11 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require rails-ujs
 //= require activestorage
-//= require turbolinks
+// require turbolinks
 //= require_tree .
 //= require jquery
+//= require rails-ujs
 
 
 $(document).ready(function () {
@@ -144,10 +144,13 @@ $(document).ready(function () {
 		}
 	});
 
+	
+
 	//httpで始まるテキストを自動でリンク化Code ================================== 
 	$(".post-block-text").each(function(){
 		$(this).html( $(this).html().replace(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g, '<a href="$1">$1</a> ') );
 	});
+
 
 
 

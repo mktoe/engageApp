@@ -5,4 +5,7 @@ class PostLike < ApplicationRecord
 
     validates :post_id, presence: true
     validates :profile_id, presence: true
+
+    #scopeを定義
+    scope :filter_by_post, ->(post_id) { where(post_id: post_id) if post_id }
 end
