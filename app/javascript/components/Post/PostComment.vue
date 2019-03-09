@@ -1,57 +1,117 @@
 <template>
     <div>
-        <!--コメントがあった場合に件数と表示ボタンを表示-->
         <div v-if="commentList !='' ">
-            <div @click="showComment" class="comment_display_text">コメント{{ commentList.length }}件を表示</div>
+            <i class="fas fa-comment"></i>{{ commentList.length }}
+        </div>
+        <div v-else>
+            <i class="far fa-comment"></i>
         </div>
         
-        <transition name="fade">
-            <div v-show="show_comment_area" class="post-comment-area">
+        <div v-if="commentList !='' " class="post-comment-area">
+            <transition-group name="fade" tag="div">   
 
-                <transition-group name="fade" tag="p">
-                    <div class="post-comment-block" v-for="(comment,index) in commentList" v-bind:key="index">
-                        <div v-if="fetch_profiles[index]">
-                            <div class="post-comment-left"> 
-                                <span class="post-comment-a-img">
+            <!--コメントが5件以上の場合-->
+            <div v-for="(comment,index) in commentList" v-bind:key="index">
+
+                    <div class="comment_hidden post-comment-block" v-if="index >= 5" v-show="show_comment_area">
+                        <div class="post-comment-left"> 
+                            <span class="post-comment-a-img">
                                 <!--profile 画像を表示-->
                                 <img v-bind:src="fetch_profiles[index].profile_image.thumb150.url">
                                 </span>
-                            </div><!--/.post-comment-left-->
+                        </div><!--/.post-comment-left-->
+                        <div class="post-comment-right">
+                            <!--profile 名前を表示-->
+                            <span class="post-comment-a-name">{{ fetch_profiles[index].profile_name }}</span>
 
-                            <div class="post-comment-right">
-                                <!--profile 名前を表示-->
-                                <span class="post-comment-a-name">{{ fetch_profiles[index].profile_name }}</span>
-
-                                <div v-if="comment.profile_id == profile_id_value">
-                                    <!--ログインユーザーコメントを表示-->
-                                    <div v-html="replace_text(comment.comment_text)" class="post-comment-a-comment">
-                                    </div><!--/.post-comment-a-comment-->
-                                    <button v-on:click="deleteComments(comment.id)">削除</button>
+                            <div v-if="comment.profile_id == profile_id_value">
+                                <!--ログインユーザーコメントを表示-->
+                                <div v-html="replace_text(comment.comment_text)" class="post-comment-a-comment">
+                                </div><!--/.post-comment-a-comment-->
+                                <!--削除ボタン-->
+                                <div class="delete-btn-area">
+                                    <button v-on:click="deleteComments(comment.id)" class="comment-delete-btn"><i class="far fa-trash-alt"></i>
+                                    </button>
+                                    <p class="arrow_box">削除</p>
                                 </div>
+                            </div>
 
-                                <div v-else>
-                                    <!--コメントを表示-->
-                                    <div v-html="replace_text(comment.comment_text)" class="post-comment-a-comment">
-                                    </div><!--/.post-comment-a-comment-->
+                            <div v-else>
+                                <!--コメントを表示-->
+                                <div v-html="replace_text(comment.comment_text)" class="post-comment-a-comment">
+                                </div><!--/.post-comment-a-comment-->
+                            </div>
+                        </div><!--/.post-comment-right-->
+                    </div>
+
+                    <!--コメントが5件以下の場合-->
+                    <div v-else class="post-comment-block">
+
+                        <div class="post-comment-left"> 
+                            <span class="post-comment-a-img">
+                                <!--profile 画像を表示-->
+                                <img v-bind:src="fetch_profiles[index].profile_image.thumb150.url">
+                                </span>
+                        </div><!--/.post-comment-left-->
+                        <div class="post-comment-right">
+                            <!--profile 名前を表示-->
+                            <span class="post-comment-a-name">{{ fetch_profiles[index].profile_name }}</span>
+
+                            <div v-if="comment.profile_id == profile_id_value">
+                                <!--ログインユーザーコメントを表示-->
+                                <div v-html="replace_text(comment.comment_text)" class="post-comment-a-comment">
+                                </div><!--/.post-comment-a-comment-->
+                                <!--削除ボタン-->
+                                <div class="delete-btn-area">
+                                    <button v-on:click="deleteComments(comment.id)" class="comment-delete-btn"><i class="far fa-trash-alt"></i>
+                                    </button>
+                                    <p class="arrow_box">削除</p>
                                 </div>
-                                
-                            </div><!--/.post-comment-right-->
+                            </div>
 
-                        </div><!--/.end v-if -->
-                    </div><!--/.post-comment-block-->
-                </transition-group>
+                            <div v-else>
+                                <!--コメントを表示-->
+                                <div v-html="replace_text(comment.comment_text)" class="post-comment-a-comment">
+                                </div><!--/.post-comment-a-comment-->
+                            </div>
+                            
+                        </div><!--/.post-comment-right-->
+                    </div><!--/.end v-if -->
+                </div><!--/.post-comment-block-->
 
-            </div><!--post-comment-area-->
-        </transition>
+            </transition-group>
+
+
+            <div v-if="commentList.length >= 5">
+                <div v-on:click="showComment" v-show="show_comment_triger" class="comment_display_text">すべてのコメントを表示</div>
+            </div>
+
+        </div><!--post-comment-area-->
+
         
+        <!--コメント入力フォーム--> 
+        <!--@click.preventでページリロードさせない-->
+        <transition name="fade">
+            <div class="post-comment-block">
+            <div class="post-comment-left"> 
+                <span class="post-comment-a-img">
+                <!--profile 画像を表示-->
+                <img v-bind:src="get_profiles.thumb150.url">
+                </span>
+            </div><!--/.post-comment-left-->
 
-        <!--@click.preventでページリロードさせない-->       
-        <form @submit.prevent="postCommentCreate" id="new_post_comment" class="form-inline" name="new_post_comment">
-            <input type='hidden' name='post_comment[profile_id_value]' v-bind:value="profile_id_value">
-            <input type='hidden' name='post_comment[post_id_value]' v-bind:value="post_id_value">
-            <textarea v-bind:rows="comment_text.split(/\n/).length" placeholder="コメントする" name='post_comment[comment_text]' v-model='comment_text'></textarea>
-            <button type="submit" class='btn btn-primary'>コメントする</button>
-        </form>
+            <div class="post-comment-right">
+                <form @submit.prevent="postCommentCreate" id="new_post_comment" class="form-inline" name="new_post_comment">
+                    <input type='hidden' name='post_comment[profile_id_value]' v-bind:value="profile_id_value">
+                    <input type='hidden' name='post_comment[post_id_value]' v-bind:value="post_id_value">
+                    <textarea v-bind:rows="comment_text.split(/\n/).length" placeholder="コメントする" name='post_comment[comment_text]' v-model='comment_text'></textarea>
+                    <button type="submit" class='btn btn-primary comment-add-btn'>コメント投稿</button>
+                </form>  
+            </div><!--/.post-comment-right-->
+            </div>
+        </transition>  
+        
+        
     </div>
 </template>
 
@@ -77,8 +137,8 @@ export default {
             comment_text: '',
 
             //コメント表示非表示
-            show_comment_area: false
-            
+            show_comment_area: false,
+            show_comment_triger: true
         }
     },
     created: function() {
@@ -133,6 +193,10 @@ export default {
             this.getCommentByPostId().then(result => {
                 this.commentList = result
             }) 
+
+            this.show_comment_area = true
+            this.show_comment_triger = false
+
         },
 
         // 【削除】rails側のdestroyアクションにリクエストするメソッド
@@ -161,6 +225,7 @@ export default {
         //コメントの表示・非表示　切り替え
         showComment: function(){
             this.show_comment_area = !this.show_comment_area
+            this.show_comment_triger = false
         }
     },
 
@@ -183,8 +248,19 @@ export default {
             fetch_profiles.push(result);
         }
         return fetch_profiles;
-        }
-    } 
+        },
+
+        //ログインしているユーザーの情報を取得
+        get_profiles: function() {
+            for (var i = 0; i < this.profileList.length; i++) {
+                //post_commentsのprofile_idをdataに格納
+                let date = this.profileList[i].id;
+                if(this.profileId == date){
+                    return this.profileList[i].profile_image
+                }
+            }
+        } 
+    }
 }
 </script>
 
@@ -209,20 +285,20 @@ export default {
     color:#007bff;
     cursor: pointer;
     transition:0.6s;
+    clear:both;
 }
 .comment_display_text:hover{
     opacity:0.6;
 }
 .post-comment-area{
     padding:5px 0;
-    border-bottom:1px solid #dddfe2;
-    margin-bottom:10px;
+    margin:10px 0 0 0;
     clear:both;
 }
 .post-comment-block{
     width:100%;
     display: block;
-    padding:0px 0 8px 0;
+    padding:8px 0 8px 0;
 }
 .post-comment-block:after{
     content:"";
@@ -244,7 +320,7 @@ export default {
 }
 .post-comment-right{
     float:left;
-    max-width: 580px;
+    width: calc(100% - 45px);
 }
 .post-comment-a-name{
     color:#0097A7;;
@@ -252,11 +328,90 @@ export default {
     display: block;
 }
 .post-comment-a-comment{
-    background: #f2f3f5;
     padding:5px;
     border-radius:5px;
     font-size:13px !important;
 }
+
+.delete-btn-area{
+    position:relative;
+}
+button.comment-delete-btn{
+    background: transparent;
+    border-style:none;
+    display: block;
+    cursor: pointer;
+}
+button.comment-delete-btn i{
+    color:#dcdcdc !important;
+    font-size:15px;
+    margin-top:5px;
+}
+button.comment-delete-btn:focus {
+    outline: 0;
+}
+.arrow_box {
+    opacity:0;
+    display: none;
+    transition: all 0.3s ease 0s;
+    position: absolute;
+    padding: 0.2em 0.7em;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;  
+    border-radius: 8px;
+    background: #333;
+    color: #fff;
+    font-size:13px;
+    left:-5px;
+}
+button.comment-delete-btn:hover + p.arrow_box {
+    top: 26px;/*HOVER位置*/
+    opacity: 1;
+    display: block;
+}
+
+
+
+form#new_post_comment{
+    border:solid 1px #d8d8d8;
+    border-radius: 8px;
+    color: #9b9b9b;
+    height: auto;
+    padding: 10px 13px 40px 10px;
+    resize: none;
+    word-wrap: break-word;
+    position:relative;
+}
+form#new_post_comment textarea{
+    width:100%;
+    resize:none;
+    border-style:none;
+    margin-bottom:5px;
+    border-radius:5px;
+}
+form#new_post_comment textarea::placeholder{
+    color:#ccc;
+}
+form#new_post_comment textarea:focus {
+    outline: 0;
+}
+button.comment-add-btn{
+    width:auto;
+    background:#00BCD4;
+    outline: 0;
+    border-style:none;
+    height:30px;
+    font-size:10px;
+    position:absolute;
+    right:13px;
+    bottom:10px;
+}
+i.fa-comment{
+    margin-left:10px;
+}
+
+
+
 </style>
 
 

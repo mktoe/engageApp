@@ -1,6 +1,9 @@
 <%#プロフィール表示エリア %>
 <div class="area-left02">
-    <%= image_tag @p_user.profile_image.thumb150.url %>
+    <div class="profile-circle-avatar">
+        <%= image_tag @p_user.profile_image.thumb.url %>
+    </div><!--/."post-circle-avatar-->
+
     <%= @p_user.profile_name %>
 
     <br>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="post-likes-area">
         <div v-if="isLiked" @click="deleteLike()">
             <i btn="like" class="fas fa-heart like"></i> {{ count }}
         </div>

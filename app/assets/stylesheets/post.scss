@@ -1,0 +1,174 @@
+$green01: #0097A7;
+$green02: #00BCD4;
+$green03: #B2EBF2;
+
+
+/* =================================
+投稿一覧ページ（トップ）
+===================================*/
+.my-post-area{
+    background:#fff;
+    padding:10px;
+    border-radius:5px;
+    margin:15px 0 0 0;
+    border:1px solid #dddfe2;
+    overflow: hidden;
+}
+.my-post-circle-avatar{
+    float:left;
+    width:6%;
+}
+.my-post-left-area{
+    float:left;
+    width:80%;
+}
+.my-post-right-area{
+    float:right;
+    width:10%;
+}
+textarea.my-post-text-area{
+    width:100%;
+    resize: none;
+    border-style:none;
+    background:#F9F9F9;
+    border:1px solid #dcdcdc;
+    padding:5px 10px;
+    height:40px;
+    margin-bottom:5px;
+    border-radius:5px;
+}
+textarea.my-post-text-area::placeholder{
+    color:#ccc;
+}
+
+textarea.my-post-text-area:focus {
+    outline: 0;
+    border:3px solid #B2EBF2;
+}
+input.my-post-add-btn{
+    width:100%;
+    background:#0097A7;
+    outline: 0;
+    border-style:none;
+    height:40px;
+}
+input.my-post-add-btn:hover{
+    background:#00BCD4;
+}
+input[type="text"]:focus {
+    outline: 0;
+}
+input.my-post-file-input {
+    display:none !important;	/* アップロードボタンのスタイルを無効にする */
+}
+label.my-post-file-label{
+    color: #fff;
+    background-color:#0097A7;
+    padding:4px 10px;
+    border-radius:5px;
+    transition:0.6s;
+}
+label.my-post-file-label:hover{
+    background-color:#00BCD4;
+    transition:0.6s;
+    cursor: pointer;
+}
+.view_box{
+    width:70px;
+    display: block;
+    float:left;
+    margin:5px 10px 5px 0;
+}
+.view_box img{
+    width:70px;
+    height:70px;
+    object-fit: cover;
+}
+.view_box_input{
+    clear:both;
+    width:100px;
+}
+.img_view{
+    position: relative;
+}
+
+.post_block{
+    background:#fff;
+    padding:10px;
+    border-radius:5px;
+    margin:15px 0;
+    border:1px solid #dddfe2;
+    overflow: hidden;
+}
+.post_image_group{
+    margin:10px 0;
+}
+img.post_image{
+    width:670px;
+    height:auto;
+    object-fit: cover;
+    margin-left:-10px;
+}
+.post-avatar-area{
+    margin:0 0 10px 0;
+    clear:both;
+    overflow: auto;
+}
+.post-circle-avatar{
+    float:left;
+    margin-right: 10px;
+}
+.post-circle-avatar img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%; 
+}
+.post-avatar-right{
+    float:left;
+}
+span.post-a-name{
+    color:$green01;
+    display: block;
+}
+.post-a-date{
+    font-size:13px !important;
+    color:#616770;
+}
+.post-block-text{
+    clear:both;
+    margin:20px 0 20px 0;
+    color:#000;
+}
+.post-block-text p{
+    font-size:15px;
+    line-height:1.6;
+}
+.post-block-icon-area{
+    clear:both;
+    width:100%;
+    border-bottom:1px solid #dddfe2;
+    padding:0 0 10px 0;
+    margin-bottom: 10px;
+}
+.icon-area-comment-count{
+    float:right;
+    font-size:12px !important;
+    color:$green02;
+}
+
+/*プロフィール編集　画像*/
+.circle-avatar img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+img.hidden{
+    display: none;
+}
+.post-likes-area{
+    width:auto;
+    display: inline-block;
+    float:left;
+}

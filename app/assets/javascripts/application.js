@@ -20,6 +20,7 @@
 $(document).ready(function () {
 
 	// 投稿いいね機能
+	/*
 	$(document).on('click','.like_btn',function(){    
     
 		var $likeBtn = $(this);
@@ -46,10 +47,124 @@ $(document).ready(function () {
 				$likeBtn.next(".like_count_num").html(likeCountNum);
 			}
 		});
-  	});
+	});
+	*/
 
 
 	//inputにファイルがアップロードされたら 投稿複数画像アップロード
+	$(document).on("change", ".my-post-file-label", function(){
+		//input.fileのプロパティ情報を取得
+		var fileprop = $(this).children('.file').prop('files')[0],
+		//親のimgを取得
+		find_img = $(this).parent().find('img'),
+		//Blob や File オブジェクトが保有するバッファの中身に、読み取りアクセス
+		filereader = new FileReader(),
+		//プレビュー表示する箱のセレクタ
+		view_box = $(this).parent('.view_box');
+		
+		//img要素があったら　このif分なくても動く？？
+		if(find_img.length){
+		//imgの次の要素は全部削除
+		find_img.nextAll().remove();
+		find_img.remove();
+		}
+		//imgタグ
+		var img = '<div class="img_view"><img alt="" class="img" width="100"><p><a href="#" class="img_del"><i class="fas fa-times-circle"></i>削除する</a></p></div>';
+		
+		//.view_boxにimgタグを挿入
+		view_box.append(img);
+
+		filereader.onload = function() {
+			//imgのsrcプロパティにファイル情報を返す
+			view_box.find('img').attr('src', filereader.result);
+			img_del(view_box);
+		}
+		//fileオブジェクトの読み込み
+		filereader.readAsDataURL(fileprop);
+
+		//inputボタン削除
+		$(this).css("display" , "none");
+		//class付与
+		$(this).parent(".view_box").removeClass("view_box_input");
+		$(this).parent(".view_box").addClass("view-img-count");
+
+		//.view_boxの数を返す
+		var backLength = postViewLength();
+		console.log(backLength);
+		//.view_boxの画像が4以上だったら
+		if(backLength < 5){
+			//次の画像のinputボタンを作成
+			addInput(view_box);
+		}
+
+	});
+
+	//画像を選択したらinputボタンをまた表示
+	var count = 1;
+	function addInput(target){
+		//コメント投稿画像の場合
+		$has = $(this).hasClass(".commnet_file");
+		if($has = true){
+
+		//投稿画像の場合
+		var file_input = '<div class="view_box view_box_input"><label for="file_upload'+count+'" class="my-post-file-label"><i class="fas fa-images"></i> 画像<input multiple="multiple" accept="image/*" id="file_upload'+count+'" class="file my-post-file-input" type="file" name="post[post_image][]"></label></div>';
+
+		}else{
+			
+		//コメント投稿画像の場合
+		var file_input = '<div class="view_box view_box_input"><label for="file_upload'+count+'" class="my-post-file-label"><i class="fas fa-images"></i> 画像<input multiple="multiple" id="file_upload'+count+'" class="file my-post-file-input" type="file" name="post[post_image][]"></label></div>';
+
+		}
+		target.after(file_input);
+
+		count = count + 1;
+
+	}
+	//画像を削除するメソッド
+	function img_del(target){
+		//画像を削除するボタンをクリックしたら
+		target.find("a.img_del").on('click',function(){
+		var self = $(this),
+			//親要素であるimgを取得
+			parentBox = self.parent().parent().parent();
+		//確認用メッセージを表示
+		if(window.confirm('画像を削除します。\nよろしいですか？')){
+			setTimeout(function(){
+			//確認メッセージでYESなら
+			//inputのファイル情報を削除
+			parentBox.find('input[type=file]').val('');
+			//プレビュー表示してたimgを削除
+			parentBox.find('.img_view').remove();
+			//.view_boxを削除
+			parentBox.remove();
+
+			//.view_boxの数を返す
+			var backLength = postViewLength();
+			console.log(backLength);
+			//.view_boxの画像が4以上だったら
+			if(backLength == 4){
+				//プレビュー表示する箱のセレクタ
+				view_box = $("#post-img-view-area .view_box:last");
+				//次の画像のinputボタンを作成
+				addInput(view_box);
+			}
+
+			} , 0);            
+		}
+		return false;
+		});
+	}
+
+	//選択した画像の数を返すメソッド
+	function postViewLength (){
+		var vlength = $("#post-img-view-area .view-img-count").length;
+		return vlength;
+	}
+	
+
+
+	//inputにファイルがアップロードされたら 投稿複数画像アップロード
+	/*
 	$(document).on("change", ".file", function(){
 		//input.fileのプロパティ情報を取得
 		var fileprop = $(this).prop('files')[0],
@@ -123,6 +238,7 @@ $(document).ready(function () {
 		return false;
 		});
 	}
+	*/
 
 
 	// 投稿フォーム文字に応じて可変 ================================== 
