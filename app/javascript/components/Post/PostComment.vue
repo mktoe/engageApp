@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="commentList !='' ">
-            <i class="fas fa-comment"></i>{{ commentList.length }}
+            <i class="fas fa-comment"></i> {{ commentList.length }}
         </div>
         <div v-else>
             <i class="far fa-comment"></i>
@@ -17,12 +17,12 @@
                         <div class="post-comment-left"> 
                             <span class="post-comment-a-img">
                                 <!--profile 画像を表示-->
-                                <img v-bind:src="fetch_profiles[index].profile_image.thumb150.url">
+                                <img v-if="fetch_profiles[index]" v-bind:src="fetch_profiles[index].profile_image.thumb150.url">
                                 </span>
                         </div><!--/.post-comment-left-->
                         <div class="post-comment-right">
                             <!--profile 名前を表示-->
-                            <span class="post-comment-a-name">{{ fetch_profiles[index].profile_name }}</span>
+                            <span v-if="fetch_profiles[index]" class="post-comment-a-name">{{ fetch_profiles[index].profile_name }}</span>
 
                             <div v-if="comment.profile_id == profile_id_value">
                                 <!--ログインユーザーコメントを表示-->
@@ -50,12 +50,12 @@
                         <div class="post-comment-left"> 
                             <span class="post-comment-a-img">
                                 <!--profile 画像を表示-->
-                                <img v-bind:src="fetch_profiles[index].profile_image.thumb150.url">
+                                <img v-if="fetch_profiles[index]" v-bind:src="fetch_profiles[index].profile_image.thumb150.url">
                                 </span>
                         </div><!--/.post-comment-left-->
                         <div class="post-comment-right">
                             <!--profile 名前を表示-->
-                            <span class="post-comment-a-name">{{ fetch_profiles[index].profile_name }}</span>
+                            <span v-if="fetch_profiles[index]" class="post-comment-a-name">{{ fetch_profiles[index].profile_name }}</span>
 
                             <div v-if="comment.profile_id == profile_id_value">
                                 <!--ログインユーザーコメントを表示-->
@@ -96,7 +96,7 @@
             <div class="post-comment-left"> 
                 <span class="post-comment-a-img">
                 <!--profile 画像を表示-->
-                <img v-bind:src="get_profiles.thumb150.url">
+                <img v-if="get_profiles" v-bind:src="get_profiles.thumb150.url">
                 </span>
             </div><!--/.post-comment-left-->
 
@@ -206,9 +206,8 @@ export default {
                 const res = await axios.delete(`/api/post_comments/${commentId}`)
                 if (res.status !== 200) { process.exit() } 
                 //配列から該当のコメントを削除
-                for(var i =0; i< this.commentList.length; ){
+                for(var i =0; i< this.commentList.length; i++){
                     if(this.commentList[i].id === commentId){ this.commentList.splice(i,1); continue; }
-                    i++;
                 }
             }
         },
@@ -408,6 +407,7 @@ button.comment-add-btn{
 }
 i.fa-comment{
     margin-left:10px;
+    color:#0097A7;
 }
 
 

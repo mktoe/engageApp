@@ -9,7 +9,7 @@
 		</div><!--/.post-circle-avatar-->
 
 		<div class="my-post-left-area">
-			<%= f.hidden_field :profile_id , :value => current_user.id %>
+			<%= f.hidden_field :profile_id , :value => @p_user.id %>
 			<%= f.text_area :post_text , class: "my-post-text-area" , id: "ta" , placeholder: "投稿の入力" %>
 
 			<div id="post-img-view-area">
@@ -32,71 +32,38 @@
 </div><!--/.container-->
 
 
-<div id="like">
 
-<div class="container">
-	<% @posts.each do |post| %>
-	<div class="post_block">
-		<div class="post-avatar-area">
-			<%# model posts.rbにprofileメソッドを作成 %>
-			<div class="post-circle-avatar">
-				<%= link_to "/profiles/#{post.profile.id}" do %>
-					<%= image_tag post.profile.profile_image.thumb150.url %>
-				<% end %>
-			</div><!--/.post-circle-avatar-->
+<div id="posts">
 
-			<div class="post-avatar-right">
-				<span class="post-a-name">
-					<%= link_to "/profiles/#{post.profile.id}" do %>
-						<%= post.profile.profile_name  %>
-					<% end %>
-				</span>
 
-				<span class="post-a-date">
-				<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
-				</span>
-			</div><!--/.avatar-name-->
 
-			<% if post.profile_id == current_user.id %>
-				<%= link_to "/posts/#{post.id}/edit/" do %>
-					編集
-				<% end %>
-				<%= link_to '削除', "/posts/#{post.id}/destroy", method: :destroy, data: { confirm: '削除しますか？' } %>
-			<% end %>
-		</div><!--/.post-avatar-area-->
 
-		<div class="post-block-text">
-			<%= simple_format(post.post_text) %>
-		</div><!--post-block-text-->
 
-		<% if ! post.post_image.nil? %>
-			<div class="post_image_group">
-				<% post.post_image.each do |images| %>
-					<%= link_to images.url do %>
-						<%= image_tag images.url, :class => "post_image" %>
-					<% end %>
-				<% end %>
-			</div><!--/.post_image_group-->
-		<% end %>
+	<div class="container">
 
-		<!--いいねボタン-->
-		<like-button :profile-id="<%= @p_user.id %>" :post-id="<%= post.id %>"></like-button>
-		<!--コメント-->
-		<post-comment :profile-id="<%= @p_user.id %>" :post-id="<%= post.id %>"></post-comment>
-		
-		
-	</div><!--/.post_block-->
 
-	<% end %>
+	<post-block :current-user="<%= current_user.id %>"></post-block>
 
-</div><!--/.container-->
-</div><!--/#like-->
+
+
+
+		<%= render partial: 'post', collection: @posts %>
+	</div><!--/.container-->
+</div><!--/#posts-->
+
+
 
 
 <%# post.jsを読み込み %>
 <%= javascript_pack_tag 'post' %>
 <%# .vueファイルのstyleを記述する %>
 <%= stylesheet_pack_tag 'post' %>
+
+
+
+<script>
+
+</script>
 
 
 

@@ -10,15 +10,16 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require activestorage
-// require turbolinks
-//= require_tree .
 //= require jquery
-//= require rails-ujs
+//= require activestorage
+// require rails-ujs
+// require turbolinks
+// require infinite-scroll.pkgd.min
+//= require_tree .
 
 
 $(document).ready(function () {
-
+	
 	// 投稿いいね機能
 	/*
 	$(document).on('click','.like_btn',function(){    
@@ -268,10 +269,12 @@ $(document).ready(function () {
 	});
 
 
+	
+
+
 
 
 }); //end $(document).ready(function)
-
 
 
 

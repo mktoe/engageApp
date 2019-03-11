@@ -6,7 +6,7 @@ class Post < ApplicationRecord
     
     #profile情報を取得するメソッド
     def profile
-        return Profile.find_by(user_id: self.profile_id)
+        return Profile.find_by(id: self.profile_id)
     end
 
     validates :profile_id, presence: true

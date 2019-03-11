@@ -82,4 +82,8 @@ gem 'font-awesome-sass', '5.3.1'
 gem 'foreman'
 gem 'webpacker'
 
+gem "jquery-turbolinks"
+
+gem 'kaminari', :git => "git://github.com/amatsuda/kaminari.git", :branch => 'master'
+
 

@@ -1,10 +1,10 @@
 <template>
     <div class="post-likes-area">
         <div v-if="isLiked" @click="deleteLike()">
-            <i btn="like" class="fas fa-heart like"></i> {{ count }}
+            <i btn="like" class="fas fa-thumbs-up like"></i> {{ count }}
         </div>
         <div v-else @click="registerLike()">
-            <i btn="unlike" class="far fa-heart unlike"></i>{{ count }}
+            <i btn="unlike" class="far fa-thumbs-up unlike"></i> {{ count }}
         </div>
     </div>
 </template>

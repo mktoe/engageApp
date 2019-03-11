@@ -8,6 +8,10 @@ class PagesController < ApplicationController
 
   def index
     @posts = Post.all.order(id: "DESC")
+
+    #@posts = Post.page(params[:page]).per(50).all.order(id: "DESC") 
+
+
     @post = Post.new
 
     @post_comment = PostComment.new

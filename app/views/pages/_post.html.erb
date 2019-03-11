@@ -1,0 +1,50 @@
+<div class="post_block">
+		<div class="post-avatar-area">
+			<%# model posts.rbにprofileメソッドを作成 %>
+			<div class="post-circle-avatar">
+				<%= link_to "/profiles/#{post.profile.id}" do %>
+					<%= image_tag post.profile.profile_image.thumb150.url %>
+				<% end %>
+			</div><!--/.post-circle-avatar-->
+
+			<div class="post-avatar-right">
+				<span class="post-a-name">
+					<%= link_to "/profiles/#{post.profile.id}" do %>
+						<%= post.profile.profile_name  %>
+					<% end %>
+				</span>
+
+				<span class="post-a-date">
+				<%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+				</span>
+			</div><!--/.avatar-name-->
+
+			<% if post.profile.user_id == current_user.id %>
+				<%= link_to "/posts/#{post.id}/edit/" do %>
+					編集
+				<% end %>
+				<%= link_to '削除', "/posts/#{post.id}/destroy", method: :destroy, data: { confirm: '削除しますか？' } %>
+			<% end %>
+		</div><!--/.post-avatar-area-->
+
+		<div class="post-block-text">
+			<%= simple_format(post.post_text) %>
+		</div><!--post-block-text-->
+
+		<% if ! post.post_image.nil? %>
+			<div class="post_image_group">
+				<% post.post_image.each do |images| %>
+					<%= link_to images.url do %>
+						<%= image_tag images.url, :class => "post_image" %>
+					<% end %>
+				<% end %>
+			</div><!--/.post_image_group-->
+		<% end %>
+
+		<!--いいねボタン-->
+		<like-button :profile-id="<%= @p_user.id %>" :post-id="<%= post.id %>"></like-button>
+		<!--コメント-->
+		<post-comment :profile-id="<%= @p_user.id %>" :post-id="<%= post.id %>"></post-comment>
+		
+		
+	</div><!--/.post_block-->
