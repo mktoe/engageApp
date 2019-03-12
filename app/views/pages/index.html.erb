@@ -34,20 +34,9 @@
 
 
 <div id="posts">
-
-
-
-
-
 	<div class="container">
-
-
-	<post-block :current-user="<%= current_user.id %>"></post-block>
-
-
-
-
-		<%= render partial: 'post', collection: @posts %>
+	<%# vue postBlock コンポーネント %>
+	<post-block :current-user="<%= @p_user.id %>"></post-block>
 	</div><!--/.container-->
 </div><!--/#posts-->
 

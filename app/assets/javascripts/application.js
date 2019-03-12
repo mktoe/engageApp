@@ -15,6 +15,8 @@
 // require rails-ujs
 // require turbolinks
 // require infinite-scroll.pkgd.min
+//= require popper
+//= require bootstrap-sprockets
 //= require_tree .
 
 

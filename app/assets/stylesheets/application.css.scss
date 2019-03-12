@@ -73,6 +73,10 @@ header{
         }
     }
 }
+ul.header-list{
+    overflow: auto;
+    margin:0;
+}
 ul.header-list li{
     float:left;
     list-style: none;
