@@ -46,14 +46,35 @@
                 <p v-html="post.post_text.replace(/\n/g,'<br/>')"></p>
             </div><!--post-block-text-->
 
+
             <div class="post_image_group">
 
-                画像は{{ post.post_image.length }}枚です。
                 <div v-for="(item,index) in post.post_image" :key="index">
                     
-                    <img class="post_image" v-bind:src="item.url">
+                    <!--1枚の場合-->
+                    <div v-if="post.post_image.length == 1">
+                        <img class="post_image" v-bind:class="['colimg1-' + index]" v-bind:src="item.url">
+                    </div>
+                    <!--2枚の場合-->
+                    <div v-if="post.post_image.length == 2">
+                        <img class="post_image" v-bind:class="['colimg2-' + index]" v-bind:src="item.url">
+                    </div>
+                    <!--3枚の場合-->
+                    <div v-if="post.post_image.length == 3">
+                        <img class="post_image" v-bind:class="['colimg3-' + index]" v-bind:src="item.url">
+                    </div>
+                    <!--4枚の場合-->
+                    <div v-if="post.post_image.length == 4">
+                        <img class="post_image" v-bind:class="['colimg4-' + index]" v-bind:src="item.url">
+                    </div>
+                     <!--５枚の場合-->
+                    <div v-if="post.post_image.length == 5">
+                        <img class="post_image" v-bind:class="['colimg5-' + index]" v-bind:src="item.url">
+                    </div>
+
                 </div>
             </div><!--/.post_image_group-->
+
 
             <div v-if="get_profiles(post.profile_id)">
                 <!--いいねボタン-->
@@ -230,6 +251,114 @@ ul.dropdown-menu{
 ul.dropdown-menu li a{
     display: block;
     padding:5px 0 !important;
+}
+.post_image_group{
+    overflow: auto;
+}
+.post_image_group:after{
+    content:"";
+    position:static;
+    display:block;
+    width:100%;
+    clear: both;
+}
+img.colimg2-0{
+    width:50%;
+    height:300px;
+    object-fit: cover;
+    float:left;
+    border:2px solid #fff;
+}
+img.colimg2-1{
+    width:50%;
+    height:300px;
+    object-fit: cover;
+    float:left;
+    border:2px solid #fff;
+}
+img.colimg3-0{
+    width:100%;
+    height:auto;
+    object-fit: cover;
+    float:none;
+    border:2px solid #fff;
+}
+img.colimg3-1{
+    width:50%;
+    height:300px;
+    object-fit: cover;
+    float:left;
+    border:2px solid #fff;
+}
+img.colimg3-2{
+    width:50%;
+    height:300px;
+    object-fit: cover;
+    float:left;
+    border:2px solid #fff;
+}
+img.colimg4-0{
+    width:50%;
+    height:300px;
+    object-fit: cover;
+    float:left;
+    border:2px solid #fff;
+}
+img.colimg4-1{
+    width:50%;
+    height:300px;
+    object-fit: cover;
+    float:left;
+    border:2px solid #fff;
+}
+img.colimg4-2{
+    width:50%;
+    height:300px;
+    object-fit: cover;
+    float:left;
+    border:2px solid #fff;
+}
+img.colimg4-3{
+    width:50%;
+    height:300px;
+    object-fit: cover;
+    float:left;
+    border:2px solid #fff;
+}
+img.colimg5-0{
+    width:50%;
+    height:300px;
+    object-fit: cover;
+    float:left;
+    border:2px solid #fff;
+}
+img.colimg5-1{
+    width:50%;
+    height:300px;
+    object-fit: cover;
+    float:left;
+    border:2px solid #fff;
+}
+img.colimg5-2{
+    width:33.333%;
+    height:250px;
+    object-fit: cover;
+    float:left;
+    border:2px solid #fff;
+}
+img.colimg5-3{
+    width:33.333%;
+    height:250px;
+    object-fit: cover;
+    float:left;
+    border:2px solid #fff;
+}
+img.colimg5-4{
+    width:33.333%;
+    height:250px;
+    object-fit: cover;
+    float:left;
+    border:2px solid #fff;
 }
 
 
