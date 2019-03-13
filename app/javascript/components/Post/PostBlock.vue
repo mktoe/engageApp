@@ -32,8 +32,9 @@
                         <div class="dropdown">
                             <a data-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h"></i></a>
                             <ul class="dropdown-menu">
-                                <li ><a href="#" v-bind:href="'/posts/'+ post.id + '/edit/'">編集</a></li>
-                                <li ><a href="#" v-on:click="deletePost(post.id)">削除</a></li>
+                                <!--<li><a @click="edit" v-bind:href="'/posts/'+ post.id + '/edit/'">編集</a></li>-->
+                                <li><a @click="edit(post.id)">編集</a></li>
+                                <li><a href="#" v-on:click="deletePost(post.id)">削除</a></li>
                             </ul>
                         </div><!--/.dropdown-->
 
@@ -41,16 +42,17 @@
                 </div>
             </div><!--/.post-edit-area-->
 
-            
             <div class="post-block-text">
-                <p v-html="post.post_text.replace(/\n/g,'<br/>')"></p>
+                <p v-if="!isEdit" v-html="post.post_text.replace(/\n/g,'<br/>')"></p>
+
+                <textarea name="post[post_text]" v-if="isEdit" v-bind:rows="post_text.split(/\n/).length" v-model="post_text" id="textarea" class="edit-post-form"></textarea>
+                <button type="button" class="btn btn-light" v-if="isEdit" @click="edit(post.id)">キャンセル</button>
+                <button type="button" class="btn btn-info" v-if="isEdit" @click="update(post.id)">更新</button>
+
             </div><!--post-block-text-->
 
-
             <div class="post_image_group">
-
-                <div v-for="(item,index) in post.post_image" :key="index">
-                    
+                <div v-for="(item,index) in post.post_image" :key="index">     
                     <!--1枚の場合-->
                     <div v-if="post.post_image.length == 1">
                         <img class="post_image" v-bind:class="['colimg1-' + index]" v-bind:src="item.url">
@@ -67,11 +69,10 @@
                     <div v-if="post.post_image.length == 4">
                         <img class="post_image" v-bind:class="['colimg4-' + index]" v-bind:src="item.url">
                     </div>
-                     <!--５枚の場合-->
+                    <!--５枚の場合-->
                     <div v-if="post.post_image.length == 5">
                         <img class="post_image" v-bind:class="['colimg5-' + index]" v-bind:src="item.url">
                     </div>
-
                 </div>
             </div><!--/.post_image_group-->
 
@@ -105,7 +106,6 @@ import LikeButton from './PostLikeButton.vue'
 import PostComment from './PostComment.vue'
 
 export default {
-    
     components: {
         'like-button' : LikeButton,
         'post-comment' : PostComment,
@@ -124,7 +124,9 @@ export default {
             //配列のサゴにimgUrlを格納する
             postsList: [],
             profileList: [],
-            page: 1
+            page: 1,
+            isEdit: false,
+            post_text: '',
         }
     },
     created: function() {
@@ -143,7 +145,6 @@ export default {
             });
         },
         */
-    
         //profilesのapiをprofileList格納
         getProfiles: function(){
             axios.get(`api/profiles.json`)
@@ -189,8 +190,35 @@ export default {
                 }).catch((err) => {
                     $state.complete()
                 })
-            }, 1500)
-        }
+            }, 800)
+        },
+        edit: function(postId) {
+            let result = this.postsList.filter(function (element) {
+                return element.id == postId;
+            }).shift();
+            this.post_text = result.post_text
+
+            this.isEdit = !this.isEdit;
+        },
+        update: function(postId) {  
+            const res = axios.patch(`/api/posts/${postId}`,{
+                post_text: this.post_text,
+            })
+            if (res.status == 200) { process.exit() } 
+
+            for (var i = 0; i < this.postsList.length; i++) {
+                //post_commentsのprofile_idをdataに格納
+                let date = this.postsList[i].id;
+                if(postId == date){
+                    this.postsList[i].post_text = this.post_text;
+                }
+            }
+
+
+
+            this.isEdit = false;
+            
+        },
     },
     
     //算出プロパティ
@@ -360,6 +388,21 @@ img.colimg5-4{
     float:left;
     border:2px solid #fff;
 }
+
+textarea.edit-post-form {
+    border: solid 1px #d8d8d8;
+    border-radius: 8px;
+    resize: none;
+    word-wrap: break-word;
+    width: 100%;
+    padding: 5px 10px;
+    margin-bottom:5px;
+    background: #F9F9F9;
+}
+textarea.edit-post-form:focus {
+    outline: 0;
+}
+
 
 
 </style>
