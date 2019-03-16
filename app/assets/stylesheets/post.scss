@@ -99,6 +99,7 @@ label.my-post-file-label:hover{
     margin:15px 0;
     border:1px solid #dddfe2;
     overflow: hidden;
+    position: relative;
 }
 .post_image_group{
     margin:10px 0;
@@ -170,4 +171,8 @@ img.hidden{
     width:auto;
     display: inline-block;
     float:left;
+}
+.modal-open {
+    overflow: visible!important;
+    position: static!important;
 }

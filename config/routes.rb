@@ -24,7 +24,7 @@ Rails.application.routes.draw do
 	post "posts/:id/destroy" => "posts#destroy"
 	resources :posts
 	namespace :api, { format: 'json' } do
-		resources :posts, only: [:index, :create, :update, :destroy]
+		resources :posts, only: [:index, :show, :create, :update, :destroy]
 	end
 
 	#post_comments

@@ -1,4 +1,9 @@
 <div class="container">
+
+<% if flash[:notice] %>
+<div id="notice" style="margin:15px 0 0 0;"class="alert alert-success"><%= flash[:notice] %></div>
+<% end %>
+
 	<div class="my-post-area">
 	<%= form_for @post , url:'/posts/create' do |f| %>
 
@@ -31,8 +36,6 @@
 	</div><!--/.my-post-area-->
 </div><!--/.container-->
 
-
-
 <div id="posts">
 	<div class="container">
 	<%# vue postBlock コンポーネント %>
@@ -41,18 +44,12 @@
 </div><!--/#posts-->
 
 
-
-
 <%# post.jsを読み込み %>
 <%= javascript_pack_tag 'post' %>
 <%# .vueファイルのstyleを記述する %>
 <%= stylesheet_pack_tag 'post' %>
 
 
-
-<script>
-
-</script>
 
 
 

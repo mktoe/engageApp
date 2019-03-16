@@ -10,7 +10,13 @@ class Api::PostsController < ApplicationController
 
 	def index
 	#modelでscopeを定義済み
+	#modelでscopeを定義済み
 		render json: Post.all
+	end
+
+
+	def show
+		render json: @post = Post.find(params[:id])
 	end
 
 	def new
@@ -34,7 +40,7 @@ class Api::PostsController < ApplicationController
 	def destroy
 		@post = Post.find_by(id: params[:id])
 		@post.destroy
-		flash[:notice] = "投稿を削除しました"
+		#flash[:notice] = "投稿を削除しました"
 		redirect_to("/")			
 		
 		#headでステータスコードを返す			

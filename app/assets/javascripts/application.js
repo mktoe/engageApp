@@ -270,14 +270,17 @@ $(document).ready(function () {
 		$(this).html( $(this).html().replace(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g, '<a href="$1">$1</a> ') );
 	});
 
-
-	
-
-
+	// メッセージを３秒後にフェードアウトする
+    $('#notice').fadeOut(3000);
 
 
 }); //end $(document).ready(function)
 
+//lightbox
+$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+	event.preventDefault();
+	$(this).ekkoLightbox();
+});
 
 
 

@@ -34,7 +34,7 @@
                             <ul class="dropdown-menu">
                                 <!--<li><a @click="edit" v-bind:href="'/posts/'+ post.id + '/edit/'">編集</a></li>-->
                                 <li><a @click="edit(post.id)">編集</a></li>
-                                <li><a href="#" v-on:click="deletePost(post.id)">削除</a></li>
+                                <li><a v-on:click="deletePost(post.id)">削除</a></li>
                             </ul>
                         </div><!--/.dropdown-->
 
@@ -42,36 +42,49 @@
                 </div>
             </div><!--/.post-edit-area-->
 
+
+
+            
+
             <div class="post-block-text">
                 <p v-if="!isEdit" v-html="post.post_text.replace(/\n/g,'<br/>')"></p>
 
                 <textarea name="post[post_text]" v-if="isEdit" v-bind:rows="post_text.split(/\n/).length" v-model="post_text" id="textarea" class="edit-post-form"></textarea>
                 <button type="button" class="btn btn-light" v-if="isEdit" @click="edit(post.id)">キャンセル</button>
                 <button type="button" class="btn btn-info" v-if="isEdit" @click="update(post.id)">更新</button>
-
             </div><!--post-block-text-->
 
             <div class="post_image_group">
-                <div v-for="(item,index) in post.post_image" :key="index">     
+                <div v-for="(item,index_img) in post.post_image" :key="index_img">     
                     <!--1枚の場合-->
                     <div v-if="post.post_image.length == 1">
-                        <img class="post_image" v-bind:class="['colimg1-' + index]" v-bind:src="item.url">
+                        <a v-bind:href="item.url" v-bind:data-lightbox="['light-group' + index]" data-title="">
+                            <img class="post_image" v-bind:class="['colimg1-' + index_img]" v-bind:src="item.url">
+                        </a>
                     </div>
                     <!--2枚の場合-->
                     <div v-if="post.post_image.length == 2">
-                        <img class="post_image" v-bind:class="['colimg2-' + index]" v-bind:src="item.url">
+                        <a v-bind:href="item.url" v-bind:data-lightbox="['light-group' + index]" data-title="">
+                            <img class="post_image" v-bind:class="['colimg2-' + index_img]" v-bind:src="item.url">
+                        </a>
                     </div>
                     <!--3枚の場合-->
                     <div v-if="post.post_image.length == 3">
-                        <img class="post_image" v-bind:class="['colimg3-' + index]" v-bind:src="item.url">
+                        <a v-bind:href="item.url" v-bind:data-lightbox="['light-group' + index]" data-title="">
+                            <img class="post_image" v-bind:class="['colimg3-' + index_img]" v-bind:src="item.url">
+                        </a>
                     </div>
                     <!--4枚の場合-->
                     <div v-if="post.post_image.length == 4">
-                        <img class="post_image" v-bind:class="['colimg4-' + index]" v-bind:src="item.url">
+                        <a v-bind:href="item.url" v-bind:data-lightbox="['light-group' + index]" data-title="">
+                            <img class="post_image" v-bind:class="['colimg4-' + index_img]" v-bind:src="item.url">
+                        </a>
                     </div>
                     <!--５枚の場合-->
                     <div v-if="post.post_image.length == 5">
-                        <img class="post_image" v-bind:class="['colimg5-' + index]" v-bind:src="item.url">
+                        <a v-bind:href="item.url" v-bind:data-lightbox="['light-group' + index]" data-title="">
+                            <img class="post_image" v-bind:class="['colimg5-' + index_img]" v-bind:src="item.url">
+                        </a>
                     </div>
                 </div>
             </div><!--/.post_image_group-->
@@ -84,6 +97,7 @@
                 <post-comment :profile-id="currentUser" :post-id="post.id"></post-comment>
             </div>
         </div><!--/.post_block-->
+
     </div><!--/end for -->
 </transition-group>
 
@@ -104,6 +118,7 @@ import InfiniteLoading from 'vue-infinite-loading'
 
 import LikeButton from './PostLikeButton.vue'
 import PostComment from './PostComment.vue'
+
 
 export default {
     components: {
@@ -133,6 +148,7 @@ export default {
         //this.getPosts(),
         this.getProfiles()
     },
+    
 
     methods: {
         // rails側のindexアクションにリクエストするメソッド
@@ -168,36 +184,34 @@ export default {
                 }
             }
         },
-
+        //無限スクロール
         infiniteHandler($state) {
-            setTimeout(() => {
-                axios.get( `api/posts.json` , {
-                    params: {
-                        page: this.page,
-                        per_page: 10
-                    },
-                    headers: {
-                        'Authorization' : 'Bearer ' + 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-                    }
-                }).then(({ data }) => {
-                    if (data.length) {
-                    this.page += 1
-                    this.postsList.push(...data)
-                    $state.loaded()
-                    } else {
-                    $state.complete()
-                    }
-                }).catch((err) => {
-                    $state.complete()
-                })
-            }, 800)
+            axios.get( `api/posts.json` , {
+                params: {
+                    page: this.page,
+                    per_page: 20
+                },
+                headers: {
+                    'Authorization' : 'Bearer ' + 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+                }
+            }).then(({ data }) => {
+                if (data.length) {
+                this.page += 1
+                this.postsList.push(...data)
+                $state.loaded()
+                } else {
+                $state.complete()
+                }
+            }).catch((err) => {
+                $state.complete()
+            })
         },
         edit: function(postId) {
             let result = this.postsList.filter(function (element) {
                 return element.id == postId;
             }).shift();
             this.post_text = result.post_text
-
+            
             this.isEdit = !this.isEdit;
         },
         update: function(postId) {  
@@ -213,8 +227,6 @@ export default {
                     this.postsList[i].post_text = this.post_text;
                 }
             }
-
-
 
             this.isEdit = false;
             
@@ -241,6 +253,7 @@ export default {
         }
     }
 }
+
 </script>
 
 <style lang="scss" scoped>

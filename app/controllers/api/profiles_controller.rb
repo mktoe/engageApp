@@ -12,7 +12,6 @@ class Api::ProfilesController < ApplicationController
 		#profileのidを取得するscope
 		render json: Profile.all
 	end	
-
 	def new
 	end	
 
