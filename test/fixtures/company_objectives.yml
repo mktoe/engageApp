@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company_objective_name: MyString
+  company_objective_complete_date: 2019-03-20 00:27:12
+  company_objective_achieve_rate: 1
+  company_objective_discription: MyText
+
+two:
+  company_objective_name: MyString
+  company_objective_complete_date: 2019-03-20 00:27:12
+  company_objective_achieve_rate: 1
+  company_objective_discription: MyText

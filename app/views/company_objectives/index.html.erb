@@ -1,0 +1,65 @@
+<div class="area-center02">
+
+<%# Vue Component %>
+<div id="company-objectives">
+
+
+
+
+<div class="container">
+
+<div class="section-inner">
+
+
+
+
+<div class="content-header">
+<div class="row">
+<div class="col-md-6">
+<h1 class="text-dark">OKR 会社目標一覧</h1>
+</div>
+<div class="col-md-6">
+<modal-form></modal-form>
+</div>
+</div><!--/.row-->
+</div><!--/.content-header-->
+
+
+
+
+	<p id="notice"><%= notice %></p>
+
+	<div class="row">
+
+		
+
+			
+
+			<objective-block></objective-block>
+
+		
+
+
+	</div><!--/.row-->
+
+
+
+	
+
+
+
+</div><!--/.section-inner-->
+
+</div><!--/.container-->
+
+
+
+</div><!--/#company-objectives-->
+</div><!--/.area-center02-->
+
+
+
+<%# post.jsを読み込み %>
+<%= javascript_pack_tag 'company_objective' %>
+<%# .vueファイルのstyleを記述する %>
+<%= stylesheet_pack_tag 'company_objective' %>

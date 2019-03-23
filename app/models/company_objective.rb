@@ -1,0 +1,2 @@
+class CompanyObjective < ApplicationRecord
+end

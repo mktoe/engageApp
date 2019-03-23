@@ -1,124 +1,93 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>EngageApp</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+	<head>
+		<title>EngageApp</title>
+		<%= csrf_meta_tags %>
+		<%= csp_meta_tag %>	
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		
+		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/locale/ja.js"></script>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/locale/ja.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
-    
-  </head>
+	</head>
 
-  <body>
-    <header>
-      <nav>
-        <ul class="header-list">
+<body>
+	<header id="header">
+		<nav>
+			<ul class="header-list">
+				<% if user_signed_in? %> <!-- ユーザーがログインしているか調べる -->
+					<!-- ユーザーがログインしていた時の処理 -->
+					<li><%= link_to 'ホーム', '#' %></li>
+					<li><%= link_to 'お知らせ', '#' %></li>
+					<li><%= link_to 'ヘルプ', '#' %></li>
+					<li><%= link_to '検索', '#' %></li>
+					<li>ID： <%= current_user.id %></li>
+					<li>メールアドレス： <%= current_user.email %></li>
+					<li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %> </li><!-- ログアウトをする -->
+				<% else %>
+					<!-- ユーザーがログインしていなかった時の処理 -->
+					<li> 現在ログインしていません</li>
+					<li><%= link_to "ログイン", new_user_session_path, class: 'post' %> </li><!-- ログイン画面に移行する -->
+					<li><%= link_to "新規登録", new_user_registration_path, class: 'post' %></li> <!-- 新規登録画面に移行する -->
+				<% end %>
+			</ul>
+		</nav>
+		</header>	
+		<div class="area-left">
+			<div class="main_logo"><%= link_to 'EngageApp', '/' %></div>
+			<nav>
+				<ul class="left-area-nav">
+					<li>
+					<%= link_to '/company_objectives' do %>
+						<i class="fas fa-flag"></i> OKR</a>
+					<% end %>
+					</li>		      <li>
+					<%= link_to '/profiles' do %>
+					<i class="fas fa-users"></i> 社員一覧</a>
+					<% end %>
+					</li>		      <li>
+					<%= link_to '#' do %>
+					<i class="fas fa-sitemap"></i> 組織一覧</a>
+					<% end %>
+					</li>		      <li>
+					<%= link_to '#' do %>
+						<i class="fas fa-book-open"></i> 制度一覧</a>
+					<% end %>
+					</li>		      <li>
+					<%= link_to '#' do %>
+					<i class="fas fa-calendar-check"></i> イベント</a>
+					<% end %>
+					</li>		      <li>
+					<%= link_to '#' do %>
+						<i class="fas fa-envelope"></i> サンクス</a>
+					<% end %>
+					</li>		      <li>
+					<%= link_to '#' do %>
+						<i class="fas fa-id-badge"></i> 1on1 MTG</a>
+					<% end %>
+					</li>		      <li>
+					<%= link_to '#' do %>
+						<i class="fas fa-comment-alt"></i> チャット</a>
+					<% end %>
+					</li>		    </ul>
 
+			</nav>
+		</div>		<div class="content">		  <% if user_signed_in? %>
+		<%= render 'parts/profile' %>
 
-          <% if user_signed_in? %> <!-- ユーザーがログインしているか調べる -->
-            <!-- ユーザーがログインしていた時の処理 -->
-            <li><%= link_to 'ホーム', '#' %></li>
-            <li><%= link_to 'お知らせ', '#' %></li>
-            <li><%= link_to 'ヘルプ', '#' %></li>
-            <li><%= link_to '検索', '#' %></li>
-            <li>ID： <%= current_user.id %></li>
-            <li>メールアドレス： <%= current_user.email %></li>
-            <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %> </li><!-- ログアウトをする -->
-          <% else %>
-            <!-- ユーザーがログインしていなかった時の処理 -->
-            <li> 現在ログインしていません</li>
-            <li><%= link_to "ログイン", new_user_session_path, class: 'post' %> </li><!-- ログイン画面に移行する -->
-            <li><%= link_to "新規登録", new_user_registration_path, class: 'post' %></li> <!-- 新規登録画面に移行する -->
+		<%= yield %>
+		<% else %>		
+		<%= yield %>
 
-          <% end %>
-        </ul>
-      </nav>
-    </header>
+		<% end %>
 
-    <div class="area-left">
-      <div class="main_logo"><%= link_to 'EngageApp', '/' %></div>
-      <nav>
-        <ul class="left-area-nav">
-          <li>
-          <%= link_to '#' do %>
-            <i class="fas fa-flag"></i> OKR</a>
-          <% end %>
-          </li>
-
-          <li>
-          <%= link_to '/profiles' do %>
-          <i class="fas fa-users"></i> 社員一覧</a>
-          <% end %>
-          </li>
-
-          <li>
-          <%= link_to '#' do %>
-          <i class="fas fa-sitemap"></i> 組織一覧</a>
-          <% end %>
-          </li>
-
-          <li>
-          <%= link_to '#' do %>
-            <i class="fas fa-book-open"></i> 制度一覧</a>
-          <% end %>
-          </li>
-
-          <li>
-          <%= link_to '#' do %>
-          <i class="fas fa-calendar-check"></i> イベント</a>
-          <% end %>
-          </li>
-
-          <li>
-          <%= link_to '#' do %>
-            <i class="fas fa-envelope"></i> サンクス</a>
-          <% end %>
-          </li>
-
-          <li>
-          <%= link_to '#' do %>
-            <i class="fas fa-id-badge"></i> 1on1 MTG</a>
-          <% end %>
-          </li>
-
-          <li>
-          <%= link_to '#' do %>
-            <i class="fas fa-comment-alt"></i> チャット</a>
-          <% end %>
-          </li>
-
-        </ul>
-        
-      </nav>
-    </div>
-
-    <div class="content">
-
-      <% if user_signed_in? %>
-        <%= render 'parts/profile' %>
-        <div class="area-center">
-          <%= yield %>
-        </div><!--/.area-center-->
-
-        <%# お知らせ表示エリア %>
-        <div class="area-right">
-          ここにお知らせ表示
-        </div><!--/.area-right -->
-      <% else %>
-
-      <%= yield %>
-
-      <% end %>
-
-    </div><!--/.content -->
+	</div><!--/.content -->
 
 
+	
 
-
-  </body>
+	</body>
 </html>

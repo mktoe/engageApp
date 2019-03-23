@@ -1,0 +1,25 @@
+// Place all the styles related to the company_objectives controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#company-objectives{
+    width:100%;
+}
+.co-block{
+    background: #fff;
+    padding:15px;
+    margin-top:15px;
+    margin-bottom:15px;
+    cursor: pointer;
+    font-size: 12px;
+    position: relative;
+    overflow: hidden;
+    color: #666;
+    -webkit-box-shadow: 4px 4px 40px rgba(0,0,0,.05);
+    box-shadow: 4px 4px 40px rgba(0,0,0,.05);
+    border-color: rgba(0,0,0,.05);
+    height:200px;
+    width:100%;
+}
+.col-md-4 {
+    float: left;
+}

@@ -1,0 +1,29 @@
+<div class="area-center02">
+
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Company objective name:</strong>
+  <%= @company_objective.company_objective_name %>
+</p>
+
+<p>
+  <strong>Company objective complete date:</strong>
+  <%= @company_objective.company_objective_complete_date %>
+</p>
+
+<p>
+  <strong>Company objective achieve rate:</strong>
+  <%= @company_objective.company_objective_achieve_rate %>
+</p>
+
+<p>
+  <strong>Company objective discription:</strong>
+  <%= @company_objective.company_objective_discription %>
+</p>
+
+<%= link_to 'Edit', edit_company_objective_path(@company_objective) %> |
+<%= link_to 'Back', company_objectives_path %>
+
+</div>

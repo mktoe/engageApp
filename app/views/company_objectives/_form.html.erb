@@ -1,0 +1,37 @@
+<%= form_with(model: company_objective, local: true) do |form| %>
+  <% if company_objective.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(company_objective.errors.count, "error") %> prohibited this company_objective from being saved:</h2>
+
+      <ul>
+      <% company_objective.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :会社目標 %>
+    <%= form.text_field :company_objective_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :達成期限 %>
+    <%= form.datetime_select :company_objective_complete_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :達成率 %>
+    <%= form.number_field :company_objective_achieve_rate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :説明 %>
+    <%= form.text_area :company_objective_discription %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "会社目標作成" %>
+  </div>
+<% end %>

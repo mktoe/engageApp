@@ -1,47 +1,59 @@
-<div class="container">
+<div class="area-center">
 
-<% if flash[:notice] %>
-<div id="notice" style="margin:15px 0 0 0;"class="alert alert-success"><%= flash[:notice] %></div>
-<% end %>
-
-	<div class="my-post-area">
-	<%= form_for @post , url:'/posts/create' do |f| %>
-
-		<div class="post-circle-avatar my-post-circle-avatar">
-			<%= link_to "/profiles/#{@p_user.id}" do %>
-				<%= image_tag @p_user.profile_image.thumb150.url %>
-			<% end %>
-		</div><!--/.post-circle-avatar-->
-
-		<div class="my-post-left-area">
-			<%= f.hidden_field :profile_id , :value => @p_user.id %>
-			<%= f.text_area :post_text , class: "my-post-text-area" , id: "ta" , placeholder: "投稿の入力" %>
-
-			<div id="post-img-view-area">
-				<div class="view_box view_box_input">
-					<label for="file_upload" class="my-post-file-label">
-					<i class="fas fa-images"></i> 画像
-					<%= f.file_field :post_image , accept: "image/*" , multiple: true, id: "file_upload", class: 'file my-post-file-input' %>
-					</label>
-				</div><!--/.view_box-->
-			</div><!--/#post-img-view-area-->
-
-		</div><!--/.my-post-left-area-->
-
-		<div class="my-post-right-area">
-			<%= f.submit :"投稿" , :class=>"btn btn-primary my-post-add-btn" %>
-		</div><!--/.my-post-left-area-->
-
-	<% end %>
-	</div><!--/.my-post-area-->
-</div><!--/.container-->
-
-<div id="posts">
 	<div class="container">
-	<%# vue postBlock コンポーネント %>
-	<post-block :current-user="<%= @p_user.id %>"></post-block>
+
+	<% if flash[:notice] %>
+	<div id="notice" style="margin:15px 0 0 0;"class="alert alert-success"><%= flash[:notice] %></div>
+	<% end %>
+
+
+		<div class="my-post-area">
+		<%= form_for @post , url:'/posts/create' do |f| %>
+
+			<div class="post-circle-avatar my-post-circle-avatar">
+				<%= link_to "/profiles/#{@p_user.id}" do %>
+					<%= image_tag @p_user.profile_image.thumb150.url %>
+				<% end %>
+			</div><!--/.post-circle-avatar-->
+
+			<div class="my-post-left-area">
+				<%= f.hidden_field :profile_id , :value => @p_user.id %>
+				<%= f.text_area :post_text , class: "my-post-text-area" , id: "ta" , placeholder: "投稿の入力" %>
+
+				<div id="post-img-view-area">
+					<div class="view_box view_box_input">
+						<label for="file_upload" class="my-post-file-label">
+						<i class="fas fa-images"></i> 画像
+						<%= f.file_field :post_image , accept: "image/*" , multiple: true, id: "file_upload", class: 'file my-post-file-input' %>
+						</label>
+					</div><!--/.view_box-->
+				</div><!--/#post-img-view-area-->
+
+			</div><!--/.my-post-left-area-->
+
+			<div class="my-post-right-area">
+				<%= f.submit :"投稿" , :class=>"btn btn-primary my-post-add-btn" %>
+			</div><!--/.my-post-left-area-->
+
+		<% end %>
+		</div><!--/.my-post-area-->
 	</div><!--/.container-->
-</div><!--/#posts-->
+
+	<div id="posts">
+		<div class="container">
+		<%# vue postBlock コンポーネント %>
+		<post-block :current-user="<%= @p_user.id %>"></post-block>
+		</div><!--/.container-->
+	</div><!--/#posts-->
+
+
+</div><!--/.area-center-->
+
+
+<%# お知らせ表示エリア %>
+<div class="area-right">
+	ここにお知らせ表示
+</div><!--/.area-right -->
 
 
 <%# post.jsを読み込み %>
