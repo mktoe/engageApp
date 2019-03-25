@@ -57,7 +57,7 @@ export default {
 
             year: new Date().getFullYear(),
             valueyear: new Date().getFullYear(),
-            month: new Date().getMonth() + 1,
+            month: new Date().getMonth(),
             day: new Date().getDate(),
             days_max: '',
 

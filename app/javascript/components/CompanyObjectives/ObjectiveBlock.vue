@@ -2,7 +2,7 @@
 <div>
 
     <section v-if="errored">
-        <p>申し訳ございません。何らかのエラーでデータを表示できません。</p>
+        <p>データ接続エラー</p>
     </section>
 
     <section v-else>
@@ -15,14 +15,18 @@
     
             <div class="co-block">
                 会社目標
-        {{ objective.company_objective_name }} <br>
+                <p class="text-dark co-title-text">{{ objective.company_objective_name }}</p>
 
         <span class="objective-a-date">
             目標期日
             {{ objective.company_objective_complete_date| moment }}<br>
         </span>
-        達成率
-        {{ objective.company_objective_achieve_rate }}
+
+        <span class="objective-a-date">
+            目標達成まであと
+            {{ deadLine(objective.company_objective_complete_date) }}日<br>
+        </span>
+        
         
         <!-- グラフコンポーネント -->
         <circle-graph :achieve-rate="objective.company_objective_achieve_rate"></circle-graph><br>
@@ -83,6 +87,18 @@ export default {
             //表示側のリストに取得したデータを挿入
             //表示側のリストに取得したデータを挿入
             this.coList.push(text);
+        },
+        //目標期日までの日数を返す算出
+        deadLine(date){
+            //現在の日付のミリ秒
+            let nowDate = new Date();
+            let dnum = nowDate.getTime();
+            //目標日付のミリ秒
+            let cDate = new Date(date);
+            let cDateTime = cDate.getTime();
+            //目標日までのミリ秒を日数に変換
+            let days = Math.floor((cDateTime - dnum) / (1000*60*60*24));
+            return days;
         }
     },
     mounted(){
@@ -106,7 +122,7 @@ export default {
         // 配列の要素順番を逆順にする
         reverseCo() {
             return this.coList.slice().reverse();
-        },
+        }
     }
 }
 
@@ -120,16 +136,27 @@ export default {
         padding:15px;
         margin-top:15px;
         margin-bottom:15px;
-        cursor: pointer;
         font-size: 12px;
         position: relative;
         overflow: hidden;
         color: #666;
+        -webkit-box-shadow: 4px 4px 40px rgba(0,0,0,.05);
         box-shadow: 4px 4px 40px rgba(0,0,0,.05);
         border-color: rgba(0,0,0,.05);
         height:300px;
         width:100%;
         box-shadow:0 4px 70px -18px #707070;
+        transition: 0.6s;
+        &:hover{
+            transition: 0.6s;
+            background: #f5f5f5;
+            cursor: pointer;
+        }
+        p.co-title-text{
+            font-size:18px;
+            margin:3px 0 10px 0;
+            font-weight:bold;
+        }
     }
     .col-md-4 {
         float: left;

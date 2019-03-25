@@ -11,6 +11,8 @@ Vue.use(BootstrapVue)
 import ObjectiveBlock from '../components/CompanyObjectives/ObjectiveBlock.vue'
 import ModalForm from '../components/CompanyObjectives/ModalForm.vue'
 
+import CompanyObjectiveDetail from '../components/CompanyObjectives/detail/CompanyObjectiveDetail.vue'
+
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 Vue.use(iView);
@@ -24,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         components: { 
             'objective-block' : ObjectiveBlock,
             'modal-form' : ModalForm,
+            'company-objective-detail' : CompanyObjectiveDetail
         }
     })
 })

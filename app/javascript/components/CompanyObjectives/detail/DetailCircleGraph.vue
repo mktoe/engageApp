@@ -1,8 +1,8 @@
 <template>
 <div>
     <div class="circle-parent-box">
-        <svg class="circle-graph" width="130" height="130" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(-90deg)">
-            <circle cx="65" cy="65" r="60" v-bind:stroke-dasharray="formatTime" />
+        <svg class="circle-graph" width="220" height="220" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(-90deg)">
+            <circle cx="110" cy="110" r="100" v-bind:stroke-dasharray="formatTime" />
         </svg>
         <p class="circle-graph-num"><span class="text"> 達成率</span><span class="num">{{ resultTime }}</span> %</p>
     </div><!--/.circle-parent-box-->
@@ -15,9 +15,9 @@
         data() {
             return {
                 //percent_set: Math.ceil(this.achieveRate * 3.77), 本来はこちら
-                percent_set: Math.ceil(70 * 3.77), // 達成率に3.77をかけて小数点切り捨て
+                percent_set: Math.ceil(70 * 6.28), // 達成率に3.77をかけて小数点切り捨て
                 percent_fill: 0,
-                percent_none: 377, //100%が377
+                percent_none: 628, //100%が628
                 timerObj: null,
             }
         },
@@ -33,7 +33,7 @@
                     if ((self.percent_none == 0) || self.percent_fill == self.percent_set) {
                         clearInterval(self.timerObj)
                     }
-                }, 0.1)
+                }, 0.05)
             }
         },
         computed: {
@@ -43,7 +43,7 @@
             },
             //%の表示
             resultTime: function () {
-                return Math.floor( this.percent_fill / 3.77);
+                return Math.floor( this.percent_fill / 6.28);
             }
         }
     }
@@ -65,8 +65,8 @@ svg.circle-graph{
 }
 .circle-parent-box{
     position:relative;
-    width:130px;
-    height:130px;
+    width:220px;
+    height:220px;
     margin: 15px auto;
 }
 p.circle-graph-num{
@@ -76,13 +76,14 @@ p.circle-graph-num{
     transform: translate(-50%,-50%);
 }
 p.circle-graph-num span.text{
-    font-size:11px;
+    font-size:13px;
     display:block;
-    margin:0 0 5px 0;
+    margin:0 0 10px 0;
 }
 p.circle-graph-num span.num{
-    font-size:24px;
+    font-size:34px;
     font-weight: bold;
+    text-align:center;
 
 }
 /*
