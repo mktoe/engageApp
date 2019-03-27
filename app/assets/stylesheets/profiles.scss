@@ -1,8 +1,16 @@
 .profile-circle-avatar img{
-    width: 140px;
-    height: 140px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     border-radius: 50%; 
     display: block;
     margin: 0 auto 10px auto;
+    border: 3px solid #fff;
+}
+.profile-area{
+    background:#2A3438 ;
+    padding:15px;
+    color:#fff;
+    text-align: center;
+    border-bottom:3px solid #0097A7;
 }

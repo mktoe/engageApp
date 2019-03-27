@@ -7,9 +7,11 @@
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.14",
     "bootswatch": "^4.3.1",
+    "chart.js": "^2.8.0",
     "iview": "^3.3.3",
     "rails-ujs": "^5.2.2",
     "vue": "^2.6.7",
+    "vue-chartjs": "^3.4.2",
     "vue-infinite-loading": "^2.4.3",
     "vue-loader": "14.2.2",
     "vue-template-compiler": "^2.6.7"

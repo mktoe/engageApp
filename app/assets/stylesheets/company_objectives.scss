@@ -14,8 +14,8 @@
     position: relative;
     overflow: hidden;
     color: #666;
-    -webkit-box-shadow: 4px 4px 40px rgba(0,0,0,.05);
-    box-shadow: 4px 4px 40px rgba(0,0,0,.05);
+    -webkit-box-shadow: 4px 4px 40px rgba(0,0,0,.1);
+    box-shadow: 4px 4px 40px rgba(0,0,0,.1);
     border-color: rgba(0,0,0,.05);
     height:200px;
     width:100%;
@@ -35,7 +35,11 @@
     border-color: rgba(0,0,0,.05);
     height:auto;
     width:100%;
+    /*
     box-shadow:0 4px 70px -18px #707070;
+    */
+    -webkit-box-shadow: 4px 4px 40px rgba(0,0,0,.1);
+    box-shadow: 4px 4px 40px rgba(0,0,0,.1);
     transition: 0.6s;
     p.co-title-text{
         font-size:18px;

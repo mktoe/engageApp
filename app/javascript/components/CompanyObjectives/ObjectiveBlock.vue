@@ -140,12 +140,12 @@ export default {
         position: relative;
         overflow: hidden;
         color: #666;
-        -webkit-box-shadow: 4px 4px 40px rgba(0,0,0,.05);
-        box-shadow: 4px 4px 40px rgba(0,0,0,.05);
+        -webkit-box-shadow: 4px 4px 40px rgba(0,0,0,.1);
+        box-shadow: 4px 4px 40px rgba(0,0,0,.1);
         border-color: rgba(0,0,0,.05);
         height:300px;
         width:100%;
-        box-shadow:0 4px 70px -18px #707070;
+        /*box-shadow:0 4px 70px -18px #707070;*/
         transition: 0.6s;
         &:hover{
             transition: 0.6s;

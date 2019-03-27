@@ -28,12 +28,12 @@
             graph: function () {
                 let self = this;
                 self.timerObj = setInterval(function () {
-                    self.percent_fill++
-                    self.percent_none--
+                    self.percent_fill = self.percent_fill + 2
+                    self.percent_none = self.percent_none + 2
                     if ((self.percent_none == 0) || self.percent_fill == self.percent_set) {
                         clearInterval(self.timerObj)
                     }
-                }, 0.05)
+                }, 1)
             }
         },
         computed: {
@@ -59,8 +59,8 @@ circle{
 }
 svg.circle-graph{
     display: block;
-    margin-top:0;
-    margin-bottom:0;
+    margin-top:30px;
+    margin-bottom:30px;
     margin: 0 auto;
 }
 .circle-parent-box{
@@ -78,12 +78,11 @@ p.circle-graph-num{
 p.circle-graph-num span.text{
     font-size:13px;
     display:block;
-    margin:0 0 10px 0;
+    margin:0 0 5px 0;
 }
 p.circle-graph-num span.num{
-    font-size:34px;
+    font-size:30px;
     font-weight: bold;
-    text-align:center;
 
 }
 /*

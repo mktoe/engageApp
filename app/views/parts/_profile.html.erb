@@ -1,24 +1,69 @@
-<%#プロフィール表示エリア %>
-<div class="area-left02">
-    <div class="profile-circle-avatar">
-        <%= image_tag @p_user.profile_image.thumb.url %>
-    </div><!--/."post-circle-avatar-->
+<div class="area-left">
+    <div class="profile-area">
+        <div class="profile-circle-avatar">
+            <%= image_tag @p_user.profile_image.thumb.url %>
+        </div><!--/."post-circle-avatar-->
 
-    <%= @p_user.profile_name %>
+        <%= @p_user.profile_name %>
 
-    <br>
+        
+        <%# @p_user.profile_join_date.strftime("%Y年%m月") %>
+        <%# @p_user.profile_hobby %>    
+        <%# @p_user.profile_text %>
+    </div><!--/.profile-area-->
 
-    入社<br>
-    <%= @p_user.profile_join_date.strftime("%Y年%m月") %>
+	
+      <nav>
+        <ul class="left-area-nav">
+          <li>
+          <%= link_to '#' do %>
+            <i class="fas fa-flag"></i> OKR</a>
+          <% end %>
+          </li>
 
-    <br>
-    
-    趣味<br>
-    <%= @p_user.profile_hobby %>
+          <li>
+          <%= link_to '/profiles' do %>
+          <i class="fas fa-users"></i> 社員一覧</a>
+          <% end %>
+          </li>
 
-    <br>
-    
-    プロフィール文<br>
-    <%= @p_user.profile_text %>
+          <li>
+          <%= link_to '#' do %>
+          <i class="fas fa-sitemap"></i> 組織一覧</a>
+          <% end %>
+          </li>
 
-</div><!--/.area-left02 -->
+          <li>
+          <%= link_to '#' do %>
+            <i class="fas fa-book-open"></i> 制度一覧</a>
+          <% end %>
+          </li>
+
+          <li>
+          <%= link_to '#' do %>
+          <i class="fas fa-calendar-check"></i> イベント</a>
+          <% end %>
+          </li>
+
+          <li>
+          <%= link_to '#' do %>
+            <i class="fas fa-envelope"></i> サンクス</a>
+          <% end %>
+          </li>
+
+          <li>
+          <%= link_to '#' do %>
+            <i class="fas fa-id-badge"></i> 1on1 MTG</a>
+          <% end %>
+          </li>
+
+          <li>
+          <%= link_to '#' do %>
+            <i class="fas fa-comment-alt"></i> チャット</a>
+          <% end %>
+          </li>
+
+        </ul>
+        
+      </nav>
+    </div>
