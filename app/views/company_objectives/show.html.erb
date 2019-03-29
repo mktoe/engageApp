@@ -9,10 +9,6 @@
 <div class="container">
 
 
-
-<p id="notice"><%= notice %></p>
-
-
 <div class="content-header">
 	<div class="row">
 		<div class="col-md-12">
@@ -21,8 +17,10 @@
 	</div><!--/.row-->
 </div><!--/.content-header-->
 
+
+
 <div class="co-block">
-<company-objective-detail coname="<%= @company_objective.company_objective_name %>" codate="<%= @company_objective.company_objective_complete_date %>" coarchiverate="<%= @company_objective.company_objective_achieve_rate %>" codescription="<%= @company_objective.company_objective_discription %>"></company-objective-detail>
+<company-objective-detail coid="<%= @company_objective.id %>" coname="<%= @company_objective.company_objective_name %>" codate="<%= @company_objective.company_objective_complete_date %>" coarchiverate="<%= @company_objective.company_objective_achieve_rate %>" codescription="<%= @company_objective.company_objective_discription %>"></company-objective-detail>
 </div><!--/.co-block-->
 
 

@@ -2,11 +2,6 @@
 
 	<div class="container">
 
-	<% if flash[:notice] %>
-	<div id="notice" style="margin:15px 0 0 0;"class="alert alert-success"><%= flash[:notice] %></div>
-	<% end %>
-
-
 		<div class="my-post-area">
 		<%= form_for @post , url:'/posts/create' do |f| %>
 

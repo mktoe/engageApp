@@ -1,15 +1,23 @@
 <template>
     <div class="container">
-        
 
         <div class="row">
-            <div class="col-md-5">
-
+            <div class="col-md-11">
                 <p class="o-title"><i class="far fa-flag"></i> 会社目標<br></p>
                 <p class="co-title-text">{{ companyObjectiveName }}</p>
+                {{ childData }}
+            </div>   
+
+            <div class="col-md-1">   
+                <!-- 編集ボタン -->
+                <edit-modal-form @send-child-data="getChildData" :coid="companyObjectiveId" :coname="companyObjectiveName" :completedate="companyObjectiveCompleteDate" :objectivedesc="companyObjectiveDescription"></edit-modal-form>
+            </div>
+        </div><!--/.row-->
+            
+        <div class="row">
+            <div class="col-md-5">
                 <p class="codate"><i class="far fa-calendar-alt"></i> 達成期日 <span class="codate">{{ dateChange| moment }}</span></p>
                 <p class="dl-title"><i class="far fa-clock"></i> 目標達成まであと <span class="deadline">{{ deadLine(dateChange) }}日</span></p>
-                
                 <!-- グラフコンポーネント -->
                 <detail-circle-graph achieve-rate="companyObjectiveArchiveRate"></detail-circle-graph>
             </div>
@@ -35,20 +43,25 @@ axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken()
 
 import DetailCircleGraph from './DetailCircleGraph.vue'
 import BarGraph from './BarGraph.vue'
+import EditModalForm from './EditModalForm.vue'
 
 export default {
     components: {
         'detail-circle-graph' : DetailCircleGraph,
         'bar-graph' : BarGraph,
+        'edit-modal-form' : EditModalForm,
     },
-    props: ['coname' , 'codate' , 'coarchiverate' , 'codescription'],
+    props: ['coid' , 'coname' , 'codate' , 'coarchiverate' , 'codescription'],
     data() {
         return {
-
+            companyObjectiveId: this.coid,
             companyObjectiveName: this.coname,
             companyObjectiveCompleteDate: this.codate,
             companyObjectiveArchiveRate: this.coarchiverate,
-            companyObjectiveDescription: this.codescription
+            companyObjectiveDescription: this.codescription,
+
+            //子からデータ受け取る為の仮data
+            childData: ''
         }
     },
     //日本時間の日付フォーマットにフィルター
@@ -69,6 +82,12 @@ export default {
             //目標日までのミリ秒を日数に変換
             let days = Math.floor((cDateTime - dnum) / (1000*60*60*24));
             return days;
+        },
+        //子からデータを受け取るメソッド
+        getChildData: function(text){
+            this.companyObjectiveName = text.company_objective_name;
+            this.companyObjectiveCompl = text.company_objective_complete_date;
+            this.companyObjectiveDescription = text.company_objective_discription;
         }
     },
     computed: {
@@ -93,6 +112,7 @@ p.co-title-text{
     margin:8px 0 20px 0;
     font-weight:bold;
     color:#20A3AF;
+    line-height:1.4;
 }
 p.codate{
     margin:8px 0;
