@@ -24,6 +24,13 @@ class Api::CompanyObjectivesController < ApplicationController
 	end	
 
 	def update
+		@company_objective = CompanyObjective.find_by(id: params[:id])
+		if @company_objective.update(company_objective_params)
+			render json: @company_objective
+			flash[:notice] = "会社目標を変更しました"
+		else
+			render json: @company_objective.errors, status: :unprocessable_entity
+		end
 	end	
 	
 	def destroy
