@@ -13,6 +13,8 @@ import ModalForm from '../components/CompanyObjectives/ModalForm.vue'
 
 import CompanyObjectiveDetail from '../components/CompanyObjectives/detail/CompanyObjectiveDetail.vue'
 
+import store from '../store'
+
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 Vue.use(iView);
@@ -22,6 +24,7 @@ export default eventHub;
 
 document.addEventListener('DOMContentLoaded', () => {
     new Vue({
+        store,
         el: '#company-objectives',
         components: { 
             'objective-block' : ObjectiveBlock,

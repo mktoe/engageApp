@@ -1,0 +1,5 @@
+//export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
+export const GET_COMPANY_OBJECTIVE = 'GET_COMPANY_OBJECTIVE';
+export const SET_LOADING = 'SET_LOADING';
+export const DUMMY_TYPE = 'DUMMY_TYPE'; 
+

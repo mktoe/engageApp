@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-11">
                 <p class="o-title"><i class="far fa-flag"></i> 会社目標<br></p>
-                <p class="co-title-text">{{ companyObjectiveName }}</p>
+                <p class="co-title-text">{{ companyObjective }}</p>
                 {{ childData }}
             </div>   
 
@@ -61,7 +61,9 @@ export default {
             companyObjectiveDescription: this.codescription,
 
             //子からデータ受け取る為の仮data
-            childData: ''
+            childData: '',
+
+            companyObjective: ""
         }
     },
     //日本時間の日付フォーマットにフィルター
@@ -69,6 +71,9 @@ export default {
         moment: function (date) {
             return moment(date).format('YYYY年MM月DD日');// eslint-disable-line
         }
+    },
+    created () {
+        this.getCompanyObjectives()
     },
     methods: {
         //目標期日までの日数を返す算出
@@ -88,7 +93,18 @@ export default {
             this.companyObjectiveName = text.company_objective_name;
             this.companyObjectiveCompl = text.company_objective_complete_date;
             this.companyObjectiveDescription = text.company_objective_discription;
-        }
+        },
+        getCompanyObjectives: function(){
+            axios.get(`/api/company_objectives/${this.coid}`)
+            .then(response => {
+                this.companyObjective = response.data
+            })
+            .catch(error => {
+                console.log(error)
+                this.errored = true
+            })
+            .finally(() => this.loading = false)
+        },
     },
     computed: {
         //日付文字列をISOフォーマットに変換

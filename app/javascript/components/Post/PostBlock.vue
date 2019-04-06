@@ -2,7 +2,7 @@
 <div>
 
 <transition-group name="fade" tag="div">
-    <div v-for="(post,index) in reversePosts" :key="index">
+    <div v-for="(post,index) in reversePosts" :key="post.id">
         <div class="post_block">
             <div class="post-avatar-area">
                 <div class="post-circle-avatar">

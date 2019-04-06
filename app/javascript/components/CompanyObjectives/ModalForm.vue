@@ -77,6 +77,7 @@ export default {
             this.days_max = new Date(this.year, this.month, 0).getDate();
         },
         //会社目標の作成
+        
         companyObjectiveCreate: async function() {
             const res = await axios.post('/api/company_objectives', { 
                 company_objective_name: this.coName,
@@ -87,13 +88,22 @@ export default {
             if (res.status !== 201) { 
                 process.exit()
             }
+
+            //actionsへ渡してapiからデータ取得
+            getCompanyObjectives: {
+                this.$store.dispatch('companyObjective/getCompanyObjectives');
+            }
+
+            /*
             eventHub.$emit('send-co', {
                 company_objective_name: this.coName,
                 company_objective_complete_date:new Date(this.year, this.month - 1 , this.day),
                 company_objective_achieve_rate: 0,
                 company_objective_discription: this.coDiscription
             })
+            */
         },
+        
     }
 }
 </script>

@@ -10,6 +10,7 @@ class Api::CompanyObjectivesController < ApplicationController
 	end	
 
 	def show
+		render json: @company_objective = CompanyObjective.find(params[:id])
 	end	
 
 	def create

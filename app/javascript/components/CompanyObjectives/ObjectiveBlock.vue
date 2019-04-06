@@ -1,6 +1,5 @@
 <template>
 <div>
-
     <section v-if="errored">
         <p>データ接続エラー</p>
     </section>
@@ -8,43 +7,28 @@
     <section v-else>
     <div v-if="loading" class="loader">Loading...</div>
 
-<transition-group name="fade" tag="div">
-    <div v-for="(objective,index) in reverseCo" :key="index" class="col-md-4">
-        <a v-bind:href="'company_objectives/' + objective.id">
-
-    
+    <transition-group name="fade" tag="div">
+        <div v-for="objective in companyObjectives" :key="objective.id" class="col-md-4">
+            <a v-bind:href="'company_objectives/' + objective.id">
             <div class="co-block">
                 会社目標
                 <p class="text-dark co-title-text">{{ objective.company_objective_name }}</p>
 
-        <span class="objective-a-date">
-            目標期日
-            {{ objective.company_objective_complete_date| moment }}<br>
-        </span>
-
-        <span class="objective-a-date">
-            目標達成まであと
-            {{ deadLine(objective.company_objective_complete_date) }}日<br>
-        </span>
-        
-        
-        <!-- グラフコンポーネント -->
-        <circle-graph :achieve-rate="objective.company_objective_achieve_rate"></circle-graph><br>
-            
-        </div><!--/.co-block-->
-
-        </a>
-    
-
-    </div><!--/end for -->
-</transition-group>
-
-
-</section>
-
-
-
-    
+                <span class="objective-a-date">
+                    目標期日
+                    {{ objective.company_objective_complete_date| moment }}<br>
+                </span>
+                <span class="objective-a-date">
+                    目標達成まであと
+                    {{ deadLine(objective.company_objective_complete_date) }}日<br>
+                </span>
+                <!-- グラフコンポーネント -->
+                <circle-graph :achieve-rate="objective.company_objective_achieve_rate"></circle-graph><br>
+            </div><!--/.co-block-->
+            </a>
+        </div><!--/end for -->
+    </transition-group>
+    </section>
 </div>
 </template>
 
@@ -57,8 +41,10 @@ import axios from 'axios'
 import { csrfToken } from 'rails-ujs'
 // CSRFトークンの取得とリクエストヘッダへの設定をしてくれます
 axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken()
-
+//円グラフのコンポーネント
 import CircleGraph from './CircleGraph.vue'
+
+import { mapState } from 'vuex';
 
 export default {
     components: {
@@ -66,10 +52,7 @@ export default {
     },
     data() {
         return {
-            text: "ああああ",
-            coList:[],
-            loading: true,
-            errored: false
+            
         }
     },
     //日本時間の日付フォーマットにフィルター
@@ -80,7 +63,9 @@ export default {
     },
     created () {
         // どこから来るかわからないけど`send-text`イベントを待ち受ける
-        eventHub.$on('send-co', this.changeText)
+        eventHub.$on('send-co', this.changeText),
+
+        this.getCompanyObjectives()
     },
     methods: {
         changeText: function(text) {
@@ -99,35 +84,32 @@ export default {
             //目標日までのミリ秒を日数に変換
             let days = Math.floor((cDateTime - dnum) / (1000*60*60*24));
             return days;
-        }
-    },
-    mounted(){
-        //companyobjectsデータをapiから取得
-        axios
-        .get(`api/company_objectives.json`)
-        .then(response => {
-            this.coList = response.data;
-            //取得したらローディング終了
-            this.loading = false;
-        })
-        //api取得のエラー処理
-        .catch(error => {
-            console.log(error)
-            this.errored = true
-        })
-        .finally(() => this.loading = false)
+        },
+        //actionsへ渡してapiからデータ取得
+        getCompanyObjectives() {
+            this.$store.dispatch('companyObjective/getCompanyObjectives');
+        },
+        
     },
     //算出プロパティ
     computed: {
-        // 配列の要素順番を逆順にする
-        reverseCo() {
-            return this.coList.slice().reverse();
-        }
+        //storeのstateを取得
+        ...mapState({
+            companyObjectives: function (state) {
+                return state.companyObjective.companyObjectives;
+            },
+            loading: function (state) {
+                return state.companyObjective.loading;
+            },
+            errored: function (state) {
+                return state.companyObjective.errored;
+            }
+        })
+
     }
 }
 
 </script>
-
 <style lang="scss" scoped>
 #company-objectives{
     width:100%;

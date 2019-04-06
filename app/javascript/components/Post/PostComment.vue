@@ -11,7 +11,7 @@
             <transition-group name="fade" tag="div">   
 
             <!--コメントが5件以上の場合-->
-            <div v-for="(comment,index) in commentList" v-bind:key="index">
+            <div v-for="(comment , index) in commentList" v-bind:key="comment.id">
 
                     <div class="comment_hidden post-comment-block" v-if="index >= 5" v-show="show_comment_area">
                         <div class="post-comment-left"> 
